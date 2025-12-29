@@ -45,7 +45,7 @@ export function Navigation({ activeSection, onSectionChange }: NavigationProps) 
               Aryan Khatri
             </h1>
             <p className="text-sm" style={{ color: "var(--theme-muted)" }}>
-              Software Engineer
+              Portfolio | CV
             </p>
           </div>
 
@@ -81,7 +81,7 @@ export function Navigation({ activeSection, onSectionChange }: NavigationProps) 
             }}
           >
             <h1 className="text-lg font-bold" style={{ color: "var(--theme-foreground)" }}>
-              Aryan Khatri
+              Portfolio | CV
             </h1>
             <div className="flex items-center gap-3">
               <ThemeToggle />

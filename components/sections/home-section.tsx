@@ -9,16 +9,24 @@ import {
   TrophyIcon,
   ArrowTopRightOnSquareIcon,
 } from "@heroicons/react/24/outline"
+import { FaGithub, FaLinkedin } from "react-icons/fa"
+import { FileText, ExternalLink } from "lucide-react"
+import { SiJavascript } from "react-icons/si";
+import { FaPython } from "react-icons/fa6";
+import { SiDjango } from "react-icons/si";
+import { SiFlask } from "react-icons/si";
+import { SiFastapi } from "react-icons/si";
+import { RiNextjsFill } from "react-icons/ri";
 
 // Fallback data from Aryan's resume
 const homeData = {
   name: "Aryan Khatri",
-  headline: "Software Engineer",
+  headline: "Software Engineer || Problem Solver",
   intro:
-    `Software Engineer and Full Stack Software Developer with expertise in building ${<b>SAAS products</b>}, AI integrated platforms and Automation Software and strong knowledge of OOPS, Agile methodologies, API Development and Integrations and User oriented interfaces. Proven ability to design, code, test, and debug software applications. Expertise in version control using Git and Github. Excellent communication and learning agility skills. Ability to quickly learn new tools and technologies.`,
+    (<>I am a Software Engineer ready to bring your dream products to the reality of mordern virtual world. Experienced in engineering sleek Websites, Mobile Applications, ERP systems, CRM systems and Artificial intelligence systems for MSME's of India. <br/><br/>Experienced in maximizing application efficiency,driving performance enhancements and system throughput using advanced DSA patterns, algorithmic optimization and System Design techniques. <br/><br/>I hold expertise in <strong>Data Science and Machine Learning</strong>, <strong>Backend Development</strong>, <strong>Frontend Development</strong> tools like SQL and NoSQL databases,</>),
   contact: {
     email: "aryankhatri.forwork@gmail.com",
-    phone: "+91 78277-39709",
+    // phone: "+91 78277-39709",
     location: "Delhi, India",
   },
   links: {
@@ -104,7 +112,7 @@ export function HomeSection() {
               {homeData.headline}
             </p>
             <p
-              className="text-lg leading-relaxed max-w-3xl mx-auto text-pretty"
+              className="text-lg leading-relaxed max-w-3xl mx-auto text-pretty text-justify"
               style={{ color: "var(--theme-muted)" }}
             >
               {homeData.intro}
@@ -113,7 +121,7 @@ export function HomeSection() {
 
           {/* Contact Info */}
           <GlassPanel className="p-6 mb-12 max-w-2xl mx-auto">
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div className="flex items-center justify-center gap-2">
                 <EnvelopeIcon className="w-5 h-5" style={{ color: "var(--theme-accent)" }} />
                 <a
@@ -124,7 +132,7 @@ export function HomeSection() {
                   {homeData.contact.email}
                 </a>
               </div>
-              <div className="flex items-center justify-center gap-2">
+              {/* <div className="flex items-center justify-center gap-2">
                 <PhoneIcon className="w-5 h-5" style={{ color: "var(--theme-accent)" }} />
                 <a
                   href={`tel:${homeData.contact.phone}`}
@@ -133,7 +141,7 @@ export function HomeSection() {
                 >
                   {homeData.contact.phone}
                 </a>
-              </div>
+              </div> */}
               <div className="flex items-center justify-center gap-2">
                 <MapPinIcon className="w-5 h-5" style={{ color: "var(--theme-accent)" }} />
                 <span className="text-sm" style={{ color: "var(--theme-foreground)" }}>
@@ -156,7 +164,8 @@ export function HomeSection() {
               }}
             >
               GitHub
-              <ArrowTopRightOnSquareIcon className="w-4 h-4" />
+              {/* <ArrowTopRightOnSquareIcon className="w-4 h-4" /> */}
+              <FaGithub/>
             </a>
             <a
               href={homeData.links.linkedin}
@@ -170,7 +179,8 @@ export function HomeSection() {
               }}
             >
               LinkedIn
-              <ArrowTopRightOnSquareIcon className="w-4 h-4" />
+              {/* <ArrowTopRightOnSquareIcon className="w-4 h-4" /> */}
+              <FaLinkedin/>
             </a>
             <a
               href={homeData.links.resume}
@@ -184,7 +194,8 @@ export function HomeSection() {
               }}
             >
               Resume
-              <ArrowTopRightOnSquareIcon className="w-4 h-4" />
+              {/* <ArrowTopRightOnSquareIcon className="w-4 h-4" /> */}
+              <FileText size={16}/>
             </a>
             <a
               href={homeData.links.skillBadges}
@@ -198,13 +209,105 @@ export function HomeSection() {
               }}
             >
               Skill Badges
-              <ArrowTopRightOnSquareIcon className="w-4 h-4" />
+              {/* <ArrowTopRightOnSquareIcon className="w-4 h-4" /> */}
+              <ExternalLink size={16}/>
             </a>
           </div>
         </div>
 
+        {/* Skills Summary */}
+        <div className="mt-20">
+          <GlassPanel className="p-8">
+            <h3 className="text-2xl font-bold mb-6 text-center" style={{ color: "var(--theme-foreground)" }}>
+              Technical Skills
+            </h3>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6">
+              <div>
+                <h4 className="font-semibold mb-3" style={{ color: "var(--theme-accent)" }}>
+                  Programming Languages
+                </h4>
+                <div className="flex flex-wrap gap-2">
+                  {["Python", "TypeScript", "JavaScript", "SQL", "SQL"].map((skill) => (
+                    <span
+                      key={skill}
+                      className="px-3 py-1 text-sm rounded-full border"
+                      style={{
+                        backgroundColor: "var(--theme-glass)",
+                        borderColor: "var(--theme-panel-border)",
+                        color: "var(--theme-foreground)",
+                      }}
+                    >
+                      {skill}
+                    </span>
+                  ))}
+                </div>
+              </div>
+              <div>
+                <h4 className="font-semibold mb-3" style={{ color: "var(--theme-accent)" }}>
+                  Frontend
+                </h4>
+                <div className="flex flex-wrap gap-2">
+                  {["Next.js", "React.js", "React Native", "Streamlit", "HTML", "CSS", "JS", "Tailwind CSS"].map((skill) => (
+                    <span
+                      key={skill}
+                      className="px-3 py-1 text-sm rounded-full border"
+                      style={{
+                        backgroundColor: "var(--theme-glass)",
+                        borderColor: "var(--theme-panel-border)",
+                        color: "var(--theme-foreground)",
+                      }}
+                    >
+                      {skill}
+                    </span>
+                  ))}
+                </div>
+              </div>
+              <div>
+                <h4 className="font-semibold mb-3" style={{ color: "var(--theme-accent)" }}>
+                  Backend & Database
+                </h4>
+                <div className="flex flex-wrap gap-2">
+                  {["Django", "Flask", "FastAPI", "Node.js", "PostgreSQL","MongoDB", "MySQL"].map((skill) => (
+                    <span
+                      key={skill}
+                      className="px-3 py-1 text-sm rounded-full border"
+                      style={{
+                        backgroundColor: "var(--theme-glass)",
+                        borderColor: "var(--theme-panel-border)",
+                        color: "var(--theme-foreground)",
+                      }}
+                    >
+                      {skill}
+                    </span>
+                  ))}
+                </div>
+              </div>
+              <div>
+                <h4 className="font-semibold mb-3" style={{ color: "var(--theme-accent)" }}>
+                  Tools & Platforms
+                </h4>
+                <div className="flex flex-wrap gap-2">
+                  {["Docker", "Containers", "Linux", "AWS", "CI/CD", "Agile", "OLama", "Langchain", "Git/Github"].map((skill) => (
+                    <span
+                      key={skill}
+                      className="px-3 py-1 text-sm rounded-full border"
+                      style={{
+                        backgroundColor: "var(--theme-glass)",
+                        borderColor: "var(--theme-panel-border)",
+                        color: "var(--theme-foreground)",
+                      }}
+                    >
+                      {skill}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </GlassPanel>
+        </div>
+        
         {/* Certifications and Awards Grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mt-20">
           {/* Certifications */}
           <div>
             <div className="flex items-center gap-3 mb-6">
@@ -267,76 +370,6 @@ export function HomeSection() {
 
         </div>
 
-        {/* Skills Summary */}
-        <div className="mt-20">
-          <GlassPanel className="p-8">
-            <h3 className="text-2xl font-bold mb-6 text-center" style={{ color: "var(--theme-foreground)" }}>
-              Technical Skills
-            </h3>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              <div>
-                <h4 className="font-semibold mb-3" style={{ color: "var(--theme-accent)" }}>
-                  Programming Languages
-                </h4>
-                <div className="flex flex-wrap gap-2">
-                  {["JavaScript", "SQL", "Python"].map((skill) => (
-                    <span
-                      key={skill}
-                      className="px-3 py-1 text-sm rounded-full border"
-                      style={{
-                        backgroundColor: "var(--theme-glass)",
-                        borderColor: "var(--theme-panel-border)",
-                        color: "var(--theme-foreground)",
-                      }}
-                    >
-                      {skill}
-                    </span>
-                  ))}
-                </div>
-              </div>
-              <div>
-                <h4 className="font-semibold mb-3" style={{ color: "var(--theme-accent)" }}>
-                  Frontend
-                </h4>
-                <div className="flex flex-wrap gap-2">
-                  {["Next.js", "React.js", "HTML", "CSS", "Tailwind CSS"].map((skill) => (
-                    <span
-                      key={skill}
-                      className="px-3 py-1 text-sm rounded-full border"
-                      style={{
-                        backgroundColor: "var(--theme-glass)",
-                        borderColor: "var(--theme-panel-border)",
-                        color: "var(--theme-foreground)",
-                      }}
-                    >
-                      {skill}
-                    </span>
-                  ))}
-                </div>
-              </div>
-              <div>
-                <h4 className="font-semibold mb-3" style={{ color: "var(--theme-accent)" }}>
-                  Backend & Database
-                </h4>
-                <div className="flex flex-wrap gap-2">
-                  {["Node.js", "Python", "MongoDB", "MySQL"].map((skill) => (
-                    <span
-                      key={skill}
-                      className="px-3 py-1 text-sm rounded-full border"
-                      style={{
-                        backgroundColor: "var(--theme-glass)",
-                        borderColor: "var(--theme-panel-border)",
-                        color: "var(--theme-foreground)",
-                      }}
-                    >
-                      {skill}
-                    </span>
-                  ))}
-                </div>
-              </div>
-            </div>
-          </GlassPanel>
-        </div>
       </div>
     </section>
   )
