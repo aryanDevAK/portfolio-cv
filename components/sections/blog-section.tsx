@@ -3,22 +3,8 @@
 import { useState, useEffect } from "react"
 import { GlassPanel } from "@/components/glass-panel"
 import { fetchBlogs } from "@/lib/data"
-import { CalendarIcon, ClockIcon, TagIcon } from "@heroicons/react/24/outline"
-
-interface Blog {
-  id: number
-  title: string
-  excerpt: string
-  content: string
-  author: string
-  publishedAt: string
-  readTime: string
-  tags: string[]
-  category: string
-  featured: boolean
-  image: string
-  slug: string
-}
+import { CalendarIcon, ClockIcon, TagIcon, XMarkIcon, ArrowLongRightIcon } from "@heroicons/react/24/outline"
+import type { Blog } from "@/lib/blogs"
 
 export function BlogSection() {
   const [blogs, setBlogs] = useState<Blog[]>([])
@@ -47,78 +33,8 @@ export function BlogSection() {
 
   const featuredBlogs = blogs.filter((blog) => blog.featured)
 
-  if (selectedBlog) {
-    return (
-      <section className="min-h-screen p-6 lg:p-8">
-        <div className="max-w-4xl mx-auto">
-          <button
-            onClick={() => setSelectedBlog(null)}
-            className="mb-6 px-4 py-2 rounded-lg font-medium transition-all duration-200 hover:scale-105"
-            style={{
-              backgroundColor: "var(--theme-accent)",
-              color: "white",
-            }}
-          >
-            ← Back to Blogs
-          </button>
-
-          <GlassPanel size="lg" className="prose prose-lg max-w-none">
-            <div className="mb-8">
-              <img
-                src={selectedBlog.image || "/placeholder.svg"}
-                alt={selectedBlog.title}
-                className="w-full h-64 object-cover rounded-xl mb-6"
-              />
-              <div className="flex items-center gap-4 mb-4 text-sm" style={{ color: "var(--theme-muted)" }}>
-                <div className="flex items-center gap-1">
-                  <CalendarIcon className="w-4 h-4" />
-                  {new Date(selectedBlog.publishedAt).toLocaleDateString()}
-                </div>
-                <div className="flex items-center gap-1">
-                  <ClockIcon className="w-4 h-4" />
-                  {selectedBlog.readTime}
-                </div>
-                <span
-                  className="px-2 py-1 rounded-full text-xs"
-                  style={{
-                    backgroundColor: "var(--theme-accent)",
-                    color: "white",
-                  }}
-                >
-                  {selectedBlog.category}
-                </span>
-              </div>
-              <h1 className="text-3xl lg:text-4xl font-bold mb-4" style={{ color: "var(--theme-foreground)" }}>
-                {selectedBlog.title}
-              </h1>
-              <div className="flex flex-wrap gap-2 mb-6">
-                {selectedBlog.tags.map((tag) => (
-                  <span
-                    key={tag}
-                    className="px-3 py-1 rounded-full text-sm flex items-center gap-1"
-                    style={{
-                      backgroundColor: "var(--theme-glass)",
-                      color: "var(--theme-muted)",
-                      border: "1px solid var(--theme-panel-border)",
-                    }}
-                  >
-                    <TagIcon className="w-3 h-3" />
-                    {tag}
-                  </span>
-                ))}
-              </div>
-            </div>
-            <div className="whitespace-pre-line leading-relaxed" style={{ color: "var(--theme-foreground)" }}>
-              {selectedBlog.content}
-            </div>
-          </GlassPanel>
-        </div>
-      </section>
-    )
-  }
-
   return (
-    <section className="min-h-screen p-6 lg:p-8 my-20">
+    <section className="min-h-screen p-6 lg:p-8 my-20 relative">
       <div className="max-w-7xl mx-auto">
         <div className="text-center mb-12">
           <h2 className="text-4xl lg:text-5xl font-bold mb-4" style={{ color: "var(--theme-foreground)" }}>
@@ -137,11 +53,12 @@ export function BlogSection() {
             </h3>
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
               {featuredBlogs.slice(0, 2).map((blog) => (
-                <GlassPanel
+                <div
                   key={blog.id}
                   className="cursor-pointer transition-all duration-300 hover:scale-105"
                   onClick={() => setSelectedBlog(blog)}
                 >
+                  <GlassPanel className="h-full">
                   <img
                     src={blog.image || "/placeholder.svg"}
                     alt={blog.title}
@@ -185,8 +102,13 @@ export function BlogSection() {
                         {blog.readTime}
                       </div>
                     </div>
+                  <div className="flex items-center gap-1 font-medium" style={{ color: "var(--theme-accent)" }}>
+                    Read More
+                    <ArrowLongRightIcon className="w-3 h-3" />
                   </div>
-                </GlassPanel>
+                  </div>
+                  </GlassPanel>
+                </div>
               ))}
             </div>
           </div>
@@ -228,11 +150,12 @@ export function BlogSection() {
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {filteredBlogs.map((blog) => (
-              <GlassPanel
+              <div
                 key={blog.id}
                 className="cursor-pointer transition-all duration-300 hover:scale-105"
                 onClick={() => setSelectedBlog(blog)}
               >
+                <GlassPanel className="h-full">
                 <img
                   src={blog.image || "/placeholder.svg"}
                   alt={blog.title}
@@ -278,8 +201,13 @@ export function BlogSection() {
                       {blog.readTime}
                     </div>
                   </div>
+                  <div className="flex items-center gap-1 font-medium" style={{ color: "var(--theme-accent)" }}>
+                    Read More
+                    <ArrowLongRightIcon className="w-4 h-4" />
+                  </div>
                 </div>
-              </GlassPanel>
+                </GlassPanel>
+              </div>
             ))}
           </div>
         )}
@@ -292,6 +220,77 @@ export function BlogSection() {
           </div>
         )}
       </div>
+
+      {/* Blog Popup Modal */}
+      {selectedBlog && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 lg:p-8">
+          <div
+            className="absolute inset-0 bg-black/60 backdrop-blur-sm transition-opacity"
+            onClick={() => setSelectedBlog(null)}
+          />
+          <GlassPanel className="relative w-full max-w-4xl max-h-[90vh] overflow-y-auto z-10 p-6 lg:p-10 shadow-2xl">
+            <button
+              onClick={() => setSelectedBlog(null)}
+              className="absolute top-4 right-4 p-2 rounded-full hover:bg-white/10 transition-colors"
+              style={{ color: "var(--theme-foreground)" }}
+            >
+              <XMarkIcon className="w-6 h-6" />
+            </button>
+
+            <div className="mb-8">
+              <img
+                src={selectedBlog.image || "/placeholder.svg"}
+                alt={selectedBlog.title}
+                className="w-full h-64 lg:h-80 object-cover rounded-xl mb-6"
+              />
+              <div className="flex items-center gap-4 mb-4 text-sm" style={{ color: "var(--theme-muted)" }}>
+                <div className="flex items-center gap-1">
+                  <CalendarIcon className="w-4 h-4" />
+                  {new Date(selectedBlog.publishedAt).toLocaleDateString()}
+                </div>
+                <div className="flex items-center gap-1">
+                  <ClockIcon className="w-4 h-4" />
+                  {selectedBlog.readTime}
+                </div>
+                <span
+                  className="px-2 py-1 rounded-full text-xs"
+                  style={{
+                    backgroundColor: "var(--theme-accent)",
+                    color: "white",
+                  }}
+                >
+                  {selectedBlog.category}
+                </span>
+              </div>
+              <h1 className="text-3xl lg:text-4xl font-bold mb-4" style={{ color: "var(--theme-foreground)" }}>
+                {selectedBlog.title}
+              </h1>
+              <div className="flex flex-wrap gap-2 mb-6">
+                {selectedBlog.tags.map((tag) => (
+                  <span
+                    key={tag}
+                    className="px-3 py-1 rounded-full text-sm flex items-center gap-1"
+                    style={{
+                      backgroundColor: "var(--theme-glass)",
+                      color: "var(--theme-muted)",
+                      border: "1px solid var(--theme-panel-border)",
+                    }}
+                  >
+                    <TagIcon className="w-3 h-3" />
+                    {tag}
+                  </span>
+                ))}
+              </div>
+            </div>
+            <div
+              className="blog-content prose prose-lg max-w-none"
+              style={{ color: "var(--theme-foreground)" }}
+            >
+              {selectedBlog.content}
+            </div>
+          </GlassPanel>
+        </div>
+      )}
     </section>
   )
 }

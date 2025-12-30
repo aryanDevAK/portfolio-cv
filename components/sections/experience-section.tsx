@@ -2,9 +2,24 @@
 
 import { GlassPanel } from "../glass-panel"
 import { BriefcaseIcon, CalendarIcon } from "@heroicons/react/24/outline"
+import {ExternalLink } from "lucide-react"
 
 // Fallback data from Aryan's resume
 const experienceData = [
+  {
+    id: 4,
+    company: "Arth",
+    role: "Software Engineer",
+    startDate: "June 2025",
+    endDate: "Present",
+    description:
+      "Working as a Software Engineer at Arth, focusing on Full Stack Development and AI in Fintech.",
+    bullets: [
+      "Engineered and deployed the Digital Leads generation and virtual kyc/pd/pv system, enhancing user onboarding efficiency by 80% and loan processing speed by 70%, impacting more than 50% of leads processing through digital channel.",
+    ],
+    logoUrl: "https://arthimpact.in/wp-content/uploads/2025/06/512-x-512.png",
+    certificate: false,
+  },
   {
     id: 1,
     company: "Intel Corporation",
@@ -19,13 +34,13 @@ const experienceData = [
       "Achieved 95% project success rate through effective implementation and analysis",
       "Published a detailed report showcasing project insights, methodology, and outcomes",
     ],
-    logoUrl: "/intel-logo.png",
+    logoUrl: "https://images.credly.com/images/51b8845c-9404-4d49-be09-8decec250beb/blob.png",
     certificate: true,
   },
   {
     id: 2,
     company: "Infosys",
-    role: "SDE Project Intern",
+    role: "SDE Intern",
     startDate: "March 2024",
     endDate: "June 2024",
     description:
@@ -35,7 +50,7 @@ const experienceData = [
       "Resulted in a 90% improvement in operational efficiency",
       "Presented project outcomes to senior stakeholders, showcasing strong communication and presentation skills",
     ],
-    logoUrl: "/infosys-logo.png",
+    logoUrl: "https://www.infosys.com/content/dam/infosys-web/burger-menu/en/images/logo.svg",
     certificate: true,
   },
   {
@@ -52,7 +67,7 @@ const experienceData = [
       "Lead Technical Coordinator at CUFEST-2023",
       "Current CGPA: 8.31",
     ],
-    logoUrl: "/cu-logo.png",
+    logoUrl: "",
     certificate: false,
   },
 ]
@@ -98,7 +113,7 @@ export function ExperienceSection() {
                 {/* Experience Card */}
                 <div
                   className={`md:w-1/2 ${
-                    index % 2 === 0 ? "md:pr-8 md:ml-auto md:text-right" : "md:pl-8 md:text-left"
+                    index % 2 === 0 ? "md:pr-8 md:ml-auto md:text-left" : "md:pl-8 md:text-left"
                   }`}
                 >
                   <GlassPanel className="p-6" hover>
@@ -106,13 +121,13 @@ export function ExperienceSection() {
                     <div className="flex items-start gap-4 mb-4">
                       <div className="flex-shrink-0">
                         <div
-                          className="w-12 h-12 rounded-xl flex items-center justify-center"
-                          style={{ backgroundColor: "var(--theme-accent)" }}
+                          className="w-20 h-16 p-1 rounded-xl flex items-center justify-center"
+                          style={{ backgroundColor: "white" }}
                         >
                           <img
                             src={experience.logoUrl || "/placeholder.svg?height=32&width=32&query=company logo"}
                             alt={`${experience.company} logo`}
-                            className="w-8 h-8 rounded"
+                            className="w-16 h-16 rounded"
                             loading="lazy"
                           />
                         </div>
@@ -124,13 +139,13 @@ export function ExperienceSection() {
                           </h3>
                           {experience.certificate && (
                             <span
-                              className="px-2 py-1 text-xs rounded-full"
+                              className="flex justify-between w-24 px-2 py-1 text-xs rounded-full"
                               style={{
                                 backgroundColor: "var(--theme-accent)",
                                 color: "white",
                               }}
                             >
-                              Certificate
+                              Certificate<ExternalLink size={12}/>
                             </span>
                           )}
                         </div>
@@ -175,7 +190,7 @@ export function ExperienceSection() {
           </div>
         </div>
 
-        {/* Skills Summary */}
+        {/* Skills Summary
         <div className="mt-20">
           <GlassPanel className="p-8">
             <h3 className="text-2xl font-bold mb-6 text-center" style={{ color: "var(--theme-foreground)" }}>
@@ -244,7 +259,7 @@ export function ExperienceSection() {
               </div>
             </div>
           </GlassPanel>
-        </div>
+        </div> */}
       </div>
     </section>
   )

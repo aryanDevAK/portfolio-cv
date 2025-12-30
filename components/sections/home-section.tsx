@@ -1,5 +1,6 @@
 "use client"
 
+import { useEffect } from "react"
 import { GlassPanel } from "../glass-panel"
 import {
   EnvelopeIcon,
@@ -11,11 +12,26 @@ import {
 } from "@heroicons/react/24/outline"
 import { FaGithub, FaLinkedin } from "react-icons/fa"
 import { FileText, ExternalLink } from "lucide-react"
-import { SiJavascript } from "react-icons/si";
-import { FaPython } from "react-icons/fa6";
-import { SiDjango } from "react-icons/si";
-import { SiFlask } from "react-icons/si";
-import { SiFastapi } from "react-icons/si";
+import {
+  SiJavascript,
+  SiTypescript,
+  SiDjango,
+  SiFlask,
+  SiFastapi,
+  SiPostgresql,
+  SiMongodb,
+  SiMysql,
+  SiStreamlit,
+  SiTailwindcss,
+  SiDocker,
+  SiLinux,
+  SiAmazonaws,
+  SiReact,
+  SiHtml5,
+  SiCss3,
+  SiNodedotjs,
+} from "react-icons/si";
+import { FaPython, FaDatabase } from "react-icons/fa6";
 import { RiNextjsFill } from "react-icons/ri";
 
 // Fallback data from Aryan's resume
@@ -23,11 +39,11 @@ const homeData = {
   name: "Aryan Khatri",
   headline: "Software Engineer || Problem Solver",
   intro:
-    (<>I am a Software Engineer ready to bring your dream products to the reality of mordern virtual world. Experienced in engineering sleek Websites, Mobile Applications, ERP systems, CRM systems and Artificial intelligence systems for MSME's of India. <br/><br/>Experienced in maximizing application efficiency,driving performance enhancements and system throughput using advanced DSA patterns, algorithmic optimization and System Design techniques. <br/><br/>I hold expertise in <strong>Data Science and Machine Learning</strong>, <strong>Backend Development</strong>, <strong>Frontend Development</strong> tools like SQL and NoSQL databases,</>),
+    (<>I am a Software Engineer ready to bring your dream products to the reality of mordern virtual world. Experienced in engineering sleek Websites, Mobile Applications, ERP systems, CRM systems and Artificial intelligence systems for MSME's of India. <br/><br/>Experienced in maximizing application efficiency, driving performance enhancements and system throughput using advanced DSA patterns, algorithmic optimization and System Design techniques. <br/><br/>I hold expertise in <strong>Data Science and Machine Learning</strong>, <strong>Backend Development</strong>, <strong>Frontend Development</strong> and Databases like <strong>SQL & NoSQL</strong>.</>),
   contact: {
     email: "aryankhatri.forwork@gmail.com",
     // phone: "+91 78277-39709",
-    location: "Delhi, India",
+    location: "Delhi-NCR, India",
   },
   links: {
     linkedin: "https://www.linkedin.com/in/aryankhatriak/",
@@ -40,27 +56,63 @@ const homeData = {
 const certifications = [
   {
     id: 1,
-    title: "IBM Full Stack Software Developer",
-    issuer: "IBM",
-    date: "2024",
+    title: "Microsoft Python Programming",
+    issuer: "Microsoft",
+    date: "Apr, 2025",
     credentialUrl: "#",
-    description: "Comprehensive full-stack development certification",
+    description: "Python Programming Fundamentals, Data Analysis and Visualization with Python, Automation and Scripting with Python, Web Development with Python, Advanced Python Development Techniques, Project Development in Python",
+    badgeId: "https://images.credly.com/images/35e44501-6af1-49f9-ac16-2e5a99334905/blob.png",
+    certificatelUrl:"https://coursera.org/share/87b983b7897391e499965a1e17162791"
+  },
+  {
+    id: 6,
+    title: "Meta Full Stack Software Engineer",
+    issuer: "Meta",
+    date: "Feb, 2024",
+    credentialUrl: "#",
+    description: "React Native, Kotlin",
+    badgeId: "https://images.credly.com/size/680x680/images/997d4586-e7b2-4174-9c76-5c7304953e2c/image.png",
+    certificatelUrl:"https://coursera.org/share/bd408fd4095bb932e3009e82706dce5c"
   },
   {
     id: 2,
-    title: "Meta Frontend Developer",
-    issuer: "Meta",
-    date: "2024",
+    title: "IBM Full Stack Software Developer",
+    issuer: "IBM",
+    date: "Aug, 2024",
     credentialUrl: "#",
-    description: "Advanced frontend development with React",
+    description: " Software Engineering, Cloud Computing, HTML, CSS, & JavaScript, Git and GitHub, React, Node.js and Express, Python for Data Science, AI & Development, Flask, Django Application Development with SQL and Databases, Containers w/ Docker, Kubernetes & OpenShift, Microservices and Serverless",
+    badgeId: "https://images.credly.com/images/854d76bf-4f74-4d51-98a0-d969214bfba7/IBM%2BLogo%2Bfor%2BAcclaim%2BProfile.png",
+    certificatelUrl:"https://coursera.org/share/d681d7def943d41608f51cc89f95150c"
   },
   {
     id: 3,
-    title: "Microsoft Python Programming",
-    issuer: "Microsoft",
-    date: "2024",
+    title: "Meta Frontend Developer",
+    issuer: "Meta",
+    date: "Jan, 2024",
     credentialUrl: "#",
-    description: "Python programming fundamentals and advanced concepts",
+    description: " Front-End Development, Principles of UX/UI Design",
+    badgeId: "https://images.credly.com/images/e91ed0b0-842b-417f-8d2f-b07535febdda/image.png",
+    certificatelUrl:"https://coursera.org/share/bd408fd4095bb932e3009e82706dce5c"
+  },
+  {
+    id: 4,
+    title: "IBM AI Developer",
+    issuer: "IBM",
+    date: "Aug, 2024",
+    credentialUrl: "#",
+    description: "Artificial Intelligence (AI), Python for Data Science, AI & Development, Machine Learning, Strealit",
+    badgeId: "https://images.credly.com/images/854d76bf-4f74-4d51-98a0-d969214bfba7/IBM%2BLogo%2Bfor%2BAcclaim%2BProfile.png",
+    certificatelUrl:" https://coursera.org/share/89371d4e798e37df0cdd1a460724bee2"
+  },
+  {
+    id: 5,
+    title: "Meta Android Developer",
+    issuer: "Meta",
+    date: "Feb, 2024",
+    credentialUrl: "#",
+    description: "React Native, Kotlin",
+    badgeId: "https://images.credly.com/images/c1cf3f71-31a4-4a10-a88f-f2ab02593d6c/image.png",
+    certificatelUrl:" https://coursera.org/share/5e64866f7ffec50be9cfed04dadf0eb9"
   },
 ]
 
@@ -90,12 +142,75 @@ const honorsAwards = [
     id: 4,
     title: "Lead Coordinator at GDSC",
     issuer: "Google Developer Student Clubs",
-    date: "2022-2023",
+    date: "2022",
     description: "Led Google Developer Student Club at Chandigarh University",
+  },
+  {
+    id: 5,
+    title: "Lead at Power Coders Society",
+    issuer: "Power Coders Society, Chandigarh University",
+    date: "2022",
+    description: "Founded and Led Coding Society at Chandigarh University",
+  },
+  {
+    id: 6,
+    title: "Won 3rd Prize at Engineer's Day",
+    issuer: "Chandigarh University",
+    date: "2022",
+    description: "Hackathon at Engineer's Day event",
   },
 ]
 
+const skills = {
+  languages: [
+    { name: "Python", icon: FaPython },
+    { name: "TypeScript", icon: SiTypescript },
+    { name: "JavaScript", icon: SiJavascript },
+    { name: "SQL", icon: FaDatabase },
+  ],
+  frontend: [
+    { name: "Next.js", icon: RiNextjsFill },
+    { name: "React.js", icon: SiReact },
+    { name: "React Native", icon: SiReact },
+    { name: "Streamlit", icon: SiStreamlit },
+    { name: "HTML", icon: SiHtml5 },
+    { name: "CSS", icon: SiCss3 },
+    { name: "Tailwind CSS", icon: SiTailwindcss },
+  ],
+  backend: [
+    { name: "Django", icon: SiDjango },
+    { name: "Flask", icon: SiFlask },
+    { name: "FastAPI", icon: SiFastapi },
+    { name: "Node.js", icon: SiNodedotjs },
+    { name: "PostgreSQL", icon: SiPostgresql },
+    { name: "MongoDB", icon: SiMongodb },
+    { name: "MySQL", icon: SiMysql },
+  ],
+  tools: [
+    { name: "Docker", icon: SiDocker },
+    { name: "Containers", icon: null },
+    { name: "Linux", icon: SiLinux },
+    { name: "AWS", icon: SiAmazonaws },
+    { name: "CI/CD", icon: null },
+    { name: "Agile", icon: null },
+    { name: "OLama", icon: null },
+    { name: "Langchain", icon: null },
+    { name: "Git/Github", icon: FaGithub },
+  ],
+}
+
 export function HomeSection() {
+  // useEffect(() => {
+  //   const script = document.createElement("script")
+  //   script.src = "//cdn.credly.com/assets/utilities/embed.js"
+  //   script.async = true
+  //   document.body.appendChild(script)
+
+  //   return () => {
+  //     document.body.removeChild(script)
+  //   }
+  // }, [])
+
   return (
     <section className="min-h-screen flex items-center justify-center p-6 my-20">
       <div className="max-w-6xl w-full">
@@ -180,7 +295,7 @@ export function HomeSection() {
             >
               LinkedIn
               {/* <ArrowTopRightOnSquareIcon className="w-4 h-4" /> */}
-              <FaLinkedin/>
+              <FaLinkedin style={{ color: "var(--theme-accent)" }} />
             </a>
             <a
               href={homeData.links.resume}
@@ -195,9 +310,9 @@ export function HomeSection() {
             >
               Resume
               {/* <ArrowTopRightOnSquareIcon className="w-4 h-4" /> */}
-              <FileText size={16}/>
+              <FileText size={16} style={{ color: "var(--theme-accent)" }} />
             </a>
-            <a
+            {/* <a
               href={homeData.links.skillBadges}
               target="_blank"
               rel="noopener noreferrer"
@@ -210,8 +325,8 @@ export function HomeSection() {
             >
               Skill Badges
               {/* <ArrowTopRightOnSquareIcon className="w-4 h-4" /> */}
-              <ExternalLink size={16}/>
-            </a>
+              {/* <ExternalLink size={16} style={{ color: "var(--theme-accent)" }} /> 
+            </a> */}
           </div>
         </div>
 
@@ -227,17 +342,18 @@ export function HomeSection() {
                   Programming Languages
                 </h4>
                 <div className="flex flex-wrap gap-2">
-                  {["Python", "TypeScript", "JavaScript", "SQL", "SQL"].map((skill) => (
+                  {skills.languages.map((skill) => (
                     <span
-                      key={skill}
-                      className="px-3 py-1 text-sm rounded-full border"
+                      key={skill.name}
+                      className="px-3 py-1 text-sm rounded-full border flex items-center gap-2"
                       style={{
                         backgroundColor: "var(--theme-glass)",
                         borderColor: "var(--theme-panel-border)",
                         color: "var(--theme-foreground)",
                       }}
                     >
-                      {skill}
+                      {skill.icon && <skill.icon style={{ color: "var(--theme-accent)" }} />}
+                      {skill.name}
                     </span>
                   ))}
                 </div>
@@ -247,17 +363,18 @@ export function HomeSection() {
                   Frontend
                 </h4>
                 <div className="flex flex-wrap gap-2">
-                  {["Next.js", "React.js", "React Native", "Streamlit", "HTML", "CSS", "JS", "Tailwind CSS"].map((skill) => (
+                  {skills.frontend.map((skill) => (
                     <span
-                      key={skill}
-                      className="px-3 py-1 text-sm rounded-full border"
+                      key={skill.name}
+                      className="px-3 py-1 text-sm rounded-full border flex items-center gap-2"
                       style={{
                         backgroundColor: "var(--theme-glass)",
                         borderColor: "var(--theme-panel-border)",
                         color: "var(--theme-foreground)",
                       }}
                     >
-                      {skill}
+                      {skill.icon && <skill.icon style={{ color: "var(--theme-accent)" }} />}
+                      {skill.name}
                     </span>
                   ))}
                 </div>
@@ -267,17 +384,18 @@ export function HomeSection() {
                   Backend & Database
                 </h4>
                 <div className="flex flex-wrap gap-2">
-                  {["Django", "Flask", "FastAPI", "Node.js", "PostgreSQL","MongoDB", "MySQL"].map((skill) => (
+                  {skills.backend.map((skill) => (
                     <span
-                      key={skill}
-                      className="px-3 py-1 text-sm rounded-full border"
+                      key={skill.name}
+                      className="px-3 py-1 text-sm rounded-full border flex items-center gap-2"
                       style={{
                         backgroundColor: "var(--theme-glass)",
                         borderColor: "var(--theme-panel-border)",
                         color: "var(--theme-foreground)",
                       }}
                     >
-                      {skill}
+                      {skill.icon && <skill.icon style={{ color: "var(--theme-accent)" }} />}
+                      {skill.name}
                     </span>
                   ))}
                 </div>
@@ -287,17 +405,18 @@ export function HomeSection() {
                   Tools & Platforms
                 </h4>
                 <div className="flex flex-wrap gap-2">
-                  {["Docker", "Containers", "Linux", "AWS", "CI/CD", "Agile", "OLama", "Langchain", "Git/Github"].map((skill) => (
+                  {skills.tools.map((skill) => (
                     <span
-                      key={skill}
-                      className="px-3 py-1 text-sm rounded-full border"
+                      key={skill.name}
+                      className="px-3 py-1 text-sm rounded-full border flex items-center gap-2"
                       style={{
                         backgroundColor: "var(--theme-glass)",
                         borderColor: "var(--theme-panel-border)",
                         color: "var(--theme-foreground)",
                       }}
                     >
-                      {skill}
+                      {skill.icon && <skill.icon style={{ color: "var(--theme-accent)" }} />}
+                      {skill.name}
                     </span>
                   ))}
                 </div>
@@ -319,20 +438,36 @@ export function HomeSection() {
             <div className="space-y-4">
               {certifications.map((cert) => (
                 <GlassPanel key={cert.id} className="p-4" hover>
-                  <div className="flex justify-between items-start mb-2">
-                    <h3 className="font-semibold text-sm" style={{ color: "var(--theme-foreground)" }}>
-                      {cert.title}
-                    </h3>
-                    <span className="text-xs" style={{ color: "var(--theme-muted)" }}>
-                      {cert.date}
-                    </span>
+                  <div className="flex items-center gap-4">
+                    {cert.badgeId && (
+                      <div className="h-full">
+                        <img src={cert.badgeId} alt={`${cert.title} Badge`} className="w-16 h-16" />
+                      </div>
+                    )}
+                    <div className="flex-1">
+                      <div className="flex justify-between items-start mb-2">
+                        <h3 className="font-semibold text-sm" style={{ color: "var(--theme-foreground)" }}>
+                          {cert.title}
+                        </h3>
+                        <span className="text-xs" style={{ color: "var(--theme-muted)" }}>
+                          {cert.date}
+                        </span>
+                      </div>
+                      <p className="text-sm mb-2" style={{ color: "var(--theme-accent)" }}>
+                        {cert.issuer} || <a
+                          href={cert.certificatelUrl}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="hover:underline text-xs"
+                        >
+                          View Certificate <ExternalLink size={12} style={{ display: "inline-block", marginBottom: "2px" }} />
+                        </a>
+                      </p>
+                      <p className="text-xs text-justify" style={{ color: "var(--theme-muted)" }}>
+                        {cert.description}
+                      </p>
+                    </div>
                   </div>
-                  <p className="text-sm mb-2" style={{ color: "var(--theme-accent)" }}>
-                    {cert.issuer}
-                  </p>
-                  <p className="text-xs" style={{ color: "var(--theme-muted)" }}>
-                    {cert.description}
-                  </p>
                 </GlassPanel>
               ))}
             </div>
