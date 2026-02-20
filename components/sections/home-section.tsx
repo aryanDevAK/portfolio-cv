@@ -33,13 +33,20 @@ import {
 } from "react-icons/si";
 import { FaPython, FaDatabase } from "react-icons/fa6";
 import { RiNextjsFill } from "react-icons/ri";
+import {
+  FadeIn,
+  ScaleIn,
+  StaggerContainer,
+  StaggerItem,
+  StaggerScaleItem,
+} from "../motion-wrapper"
 
 // Fallback data from Aryan's resume
 const homeData = {
   name: "Aryan Khatri",
   headline: "Software Engineer || Problem Solver",
   intro:
-    (<>I am a Software Engineer ready to bring your dream products to the reality of mordern virtual world. Experienced in engineering sleek Websites, Mobile Applications, ERP systems, CRM systems and Artificial intelligence systems for MSME's of India. <br/><br/>Experienced in maximizing application efficiency, driving performance enhancements and system throughput using advanced DSA patterns, algorithmic optimization and System Design techniques. <br/><br/>I hold expertise in <strong>Data Science and Machine Learning</strong>, <strong>Backend Development</strong>, <strong>Frontend Development</strong> and Databases like <strong>SQL & NoSQL</strong>.</>),
+    (<>I am a Software Engineer ready to bring your dream products to the reality of mordern virtual world. Experienced in engineering sleek <i>Websites</i>, <i>Mobile Applications</i>, <i>ERP systems</i>, <i>CRM systems</i> and <i>Artificial intelligence systems</i> for MSME's of India. <br /><br />Experienced in maximizing application efficiency, driving performance enhancements and system throughput using advanced <i>DSA patterns</i>, <i>algorithmic optimization</i> and <i>System Design techniques</i>. <br /><br />I hold expertise in <strong>Data Science and Machine Learning</strong>, <strong>Backend Development</strong>, <strong>Frontend Development</strong> and Databases like <strong>SQL &amp; NoSQL</strong>.</>),
   contact: {
     email: "aryankhatri.forwork@gmail.com",
     // phone: "+91 78277-39709",
@@ -62,7 +69,7 @@ const certifications = [
     credentialUrl: "#",
     description: "Python Programming Fundamentals, Data Analysis and Visualization with Python, Automation and Scripting with Python, Web Development with Python, Advanced Python Development Techniques, Project Development in Python",
     badgeId: "https://images.credly.com/images/35e44501-6af1-49f9-ac16-2e5a99334905/blob.png",
-    certificatelUrl:"https://coursera.org/share/87b983b7897391e499965a1e17162791"
+    certificatelUrl: "https://coursera.org/share/87b983b7897391e499965a1e17162791"
   },
   {
     id: 6,
@@ -72,7 +79,7 @@ const certifications = [
     credentialUrl: "#",
     description: "React Native, Kotlin",
     badgeId: "https://images.credly.com/size/680x680/images/997d4586-e7b2-4174-9c76-5c7304953e2c/image.png",
-    certificatelUrl:"https://coursera.org/share/bd408fd4095bb932e3009e82706dce5c"
+    certificatelUrl: "https://coursera.org/share/bd408fd4095bb932e3009e82706dce5c"
   },
   {
     id: 2,
@@ -82,7 +89,7 @@ const certifications = [
     credentialUrl: "#",
     description: " Software Engineering, Cloud Computing, HTML, CSS, & JavaScript, Git and GitHub, React, Node.js and Express, Python for Data Science, AI & Development, Flask, Django Application Development with SQL and Databases, Containers w/ Docker, Kubernetes & OpenShift, Microservices and Serverless",
     badgeId: "https://images.credly.com/images/854d76bf-4f74-4d51-98a0-d969214bfba7/IBM%2BLogo%2Bfor%2BAcclaim%2BProfile.png",
-    certificatelUrl:"https://coursera.org/share/d681d7def943d41608f51cc89f95150c"
+    certificatelUrl: "https://coursera.org/share/d681d7def943d41608f51cc89f95150c"
   },
   {
     id: 3,
@@ -92,7 +99,7 @@ const certifications = [
     credentialUrl: "#",
     description: " Front-End Development, Principles of UX/UI Design",
     badgeId: "https://images.credly.com/images/e91ed0b0-842b-417f-8d2f-b07535febdda/image.png",
-    certificatelUrl:"https://coursera.org/share/bd408fd4095bb932e3009e82706dce5c"
+    certificatelUrl: "https://coursera.org/share/bd408fd4095bb932e3009e82706dce5c"
   },
   {
     id: 4,
@@ -102,7 +109,7 @@ const certifications = [
     credentialUrl: "#",
     description: "Artificial Intelligence (AI), Python for Data Science, AI & Development, Machine Learning, Strealit",
     badgeId: "https://images.credly.com/images/854d76bf-4f74-4d51-98a0-d969214bfba7/IBM%2BLogo%2Bfor%2BAcclaim%2BProfile.png",
-    certificatelUrl:" https://coursera.org/share/89371d4e798e37df0cdd1a460724bee2"
+    certificatelUrl: " https://coursera.org/share/89371d4e798e37df0cdd1a460724bee2"
   },
   {
     id: 5,
@@ -112,7 +119,7 @@ const certifications = [
     credentialUrl: "#",
     description: "React Native, Kotlin",
     badgeId: "https://images.credly.com/images/c1cf3f71-31a4-4a10-a88f-f2ab02593d6c/image.png",
-    certificatelUrl:" https://coursera.org/share/5e64866f7ffec50be9cfed04dadf0eb9"
+    certificatelUrl: " https://coursera.org/share/5e64866f7ffec50be9cfed04dadf0eb9"
   },
 ]
 
@@ -200,308 +207,238 @@ const skills = {
 }
 
 export function HomeSection() {
-  // useEffect(() => {
-  //   const script = document.createElement("script")
-  //   script.src = "//cdn.credly.com/assets/utilities/embed.js"
-  //   script.async = true
-  //   document.body.appendChild(script)
-
-  //   return () => {
-  //     document.body.removeChild(script)
-  //   }
-  // }, [])
-
   return (
     <section className="min-h-screen flex items-center justify-center p-6 my-20">
       <div className="max-w-6xl w-full">
         {/* Hero Section */}
         <div className="text-center mb-16">
           <div className="mb-8">
-            <h1
-              className="text-5xl md:text-6xl font-bold mb-4 text-balance"
-              style={{ color: "var(--theme-foreground)" }}
-            >
-              {homeData.name}
-            </h1>
-            <p className="text-xl md:text-2xl mb-6" style={{ color: "var(--theme-accent)" }}>
-              {homeData.headline}
-            </p>
-            <p
-              className="text-lg leading-relaxed max-w-3xl mx-auto text-pretty text-justify"
-              style={{ color: "var(--theme-muted)" }}
-            >
-              {homeData.intro}
-            </p>
+            <FadeIn delay={0}>
+              <h1
+                className="text-5xl md:text-6xl font-bold mb-4 text-balance"
+                style={{ color: "var(--theme-foreground)" }}
+              >
+                {homeData.name}
+              </h1>
+            </FadeIn>
+            <FadeIn delay={0.1}>
+              <p className="text-xl md:text-2xl mb-6" style={{ color: "var(--theme-accent)" }}>
+                {homeData.headline}
+              </p>
+            </FadeIn>
+            <FadeIn delay={0.2}>
+              <p
+                className="text-lg leading-relaxed max-w-3xl mx-auto text-pretty text-justify"
+                style={{ color: "var(--theme-muted)" }}
+              >
+                {homeData.intro}
+              </p>
+            </FadeIn>
           </div>
 
           {/* Contact Info */}
-          <GlassPanel className="p-6 mb-12 max-w-2xl mx-auto">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div className="flex items-center justify-center gap-2">
-                <EnvelopeIcon className="w-5 h-5" style={{ color: "var(--theme-accent)" }} />
-                <a
-                  href={`mailto:${homeData.contact.email}`}
-                  className="text-sm hover:underline"
-                  style={{ color: "var(--theme-foreground)" }}
-                >
-                  {homeData.contact.email}
-                </a>
+          <ScaleIn delay={0.3}>
+            <GlassPanel className="p-6 mb-12 max-w-2xl mx-auto">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div className="flex items-center justify-center gap-2">
+                  <EnvelopeIcon className="w-5 h-5" style={{ color: "var(--theme-accent)" }} />
+                  <a
+                    href={`mailto:${homeData.contact.email}`}
+                    className="text-sm hover:underline"
+                    style={{ color: "var(--theme-foreground)" }}
+                  >
+                    {homeData.contact.email}
+                  </a>
+                </div>
+                <div className="flex items-center justify-center gap-2">
+                  <MapPinIcon className="w-5 h-5" style={{ color: "var(--theme-accent)" }} />
+                  <span className="text-sm" style={{ color: "var(--theme-foreground)" }}>
+                    {homeData.contact.location}
+                  </span>
+                </div>
               </div>
-              {/* <div className="flex items-center justify-center gap-2">
-                <PhoneIcon className="w-5 h-5" style={{ color: "var(--theme-accent)" }} />
-                <a
-                  href={`tel:${homeData.contact.phone}`}
-                  className="text-sm hover:underline"
-                  style={{ color: "var(--theme-foreground)" }}
-                >
-                  {homeData.contact.phone}
-                </a>
-              </div> */}
-              <div className="flex items-center justify-center gap-2">
-                <MapPinIcon className="w-5 h-5" style={{ color: "var(--theme-accent)" }} />
-                <span className="text-sm" style={{ color: "var(--theme-foreground)" }}>
-                  {homeData.contact.location}
-                </span>
-              </div>
-            </div>
-          </GlassPanel>
+            </GlassPanel>
+          </ScaleIn>
 
           {/* CTA Buttons */}
-          <div className="flex flex-wrap justify-center gap-4 mb-16">
-            <a
-              href={homeData.links.github}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex items-center gap-2 px-6 py-3 rounded-xl font-medium transition-all duration-200 hover:scale-105"
-              style={{
-                backgroundColor: "var(--theme-accent)",
-                color: "white",
-              }}
-            >
-              GitHub
-              {/* <ArrowTopRightOnSquareIcon className="w-4 h-4" /> */}
-              <FaGithub/>
-            </a>
-            <a
-              href={homeData.links.linkedin}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex items-center gap-2 px-6 py-3 rounded-xl font-medium transition-all duration-200 hover:scale-105 border"
-              style={{
-                backgroundColor: "var(--theme-glass)",
-                borderColor: "var(--theme-panel-border)",
-                color: "var(--theme-foreground)",
-              }}
-            >
-              LinkedIn
-              {/* <ArrowTopRightOnSquareIcon className="w-4 h-4" /> */}
-              <FaLinkedin style={{ color: "var(--theme-accent)" }} />
-            </a>
-            <a
-              href={homeData.links.resume}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex items-center gap-2 px-6 py-3 rounded-xl font-medium transition-all duration-200 hover:scale-105 border"
-              style={{
-                backgroundColor: "var(--theme-glass)",
-                borderColor: "var(--theme-panel-border)",
-                color: "var(--theme-foreground)",
-              }}
-            >
-              Resume
-              {/* <ArrowTopRightOnSquareIcon className="w-4 h-4" /> */}
-              <FileText size={16} style={{ color: "var(--theme-accent)" }} />
-            </a>
-            {/* <a
-              href={homeData.links.skillBadges}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex items-center gap-2 px-6 py-3 rounded-xl font-medium transition-all duration-200 hover:scale-105 border"
-              style={{
-                backgroundColor: "var(--theme-glass)",
-                borderColor: "var(--theme-panel-border)",
-                color: "var(--theme-foreground)",
-              }}
-            >
-              Skill Badges
-              {/* <ArrowTopRightOnSquareIcon className="w-4 h-4" /> */}
-              {/* <ExternalLink size={16} style={{ color: "var(--theme-accent)" }} /> 
-            </a> */}
-          </div>
+          <StaggerContainer className="flex flex-wrap justify-center gap-4 mb-16" delay={0.4} stagger={0.06}>
+            <StaggerItem>
+              <a
+                href={homeData.links.github}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-2 px-6 py-3 rounded-xl font-medium transition-all duration-200 hover:scale-105"
+                style={{
+                  backgroundColor: "var(--theme-accent)",
+                  color: "white",
+                }}
+              >
+                GitHub
+                <FaGithub />
+              </a>
+            </StaggerItem>
+            <StaggerItem>
+              <a
+                href={homeData.links.linkedin}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-2 px-6 py-3 rounded-xl font-medium transition-all duration-200 hover:scale-105 border"
+                style={{
+                  backgroundColor: "var(--theme-glass)",
+                  borderColor: "var(--theme-panel-border)",
+                  color: "var(--theme-foreground)",
+                }}
+              >
+                LinkedIn
+                <FaLinkedin style={{ color: "var(--theme-accent)" }} />
+              </a>
+            </StaggerItem>
+            <StaggerItem>
+              <a
+                href={homeData.links.resume}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-2 px-6 py-3 rounded-xl font-medium transition-all duration-200 hover:scale-105 border"
+                style={{
+                  backgroundColor: "var(--theme-glass)",
+                  borderColor: "var(--theme-panel-border)",
+                  color: "var(--theme-foreground)",
+                }}
+              >
+                Resume
+                <FileText size={16} style={{ color: "var(--theme-accent)" }} />
+              </a>
+            </StaggerItem>
+          </StaggerContainer>
         </div>
 
         {/* Skills Summary */}
-        <div className="mt-20">
+        <FadeIn delay={0.5} className="mt-20">
           <GlassPanel className="p-8">
             <h3 className="text-2xl font-bold mb-6 text-center" style={{ color: "var(--theme-foreground)" }}>
               Technical Skills
             </h3>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6">
-              <div>
-                <h4 className="font-semibold mb-3" style={{ color: "var(--theme-accent)" }}>
-                  Programming Languages
-                </h4>
-                <div className="flex flex-wrap gap-2">
-                  {skills.languages.map((skill) => (
-                    <span
-                      key={skill.name}
-                      className="px-3 py-1 text-sm rounded-full border flex items-center gap-2"
-                      style={{
-                        backgroundColor: "var(--theme-glass)",
-                        borderColor: "var(--theme-panel-border)",
-                        color: "var(--theme-foreground)",
-                      }}
-                    >
-                      {skill.icon && <skill.icon style={{ color: "var(--theme-accent)" }} />}
-                      {skill.name}
-                    </span>
-                  ))}
+              {(
+                [
+                  { title: "Programming Languages", items: skills.languages },
+                  { title: "Frontend", items: skills.frontend },
+                  { title: "Backend & Database", items: skills.backend },
+                  { title: "Tools & Platforms", items: skills.tools },
+                ] as const
+              ).map((group, groupIdx) => (
+                <div key={group.title}>
+                  <h4 className="font-semibold mb-3" style={{ color: "var(--theme-accent)" }}>
+                    {group.title}
+                  </h4>
+                  <StaggerContainer className="flex flex-wrap gap-2" delay={0.6 + groupIdx * 0.1} stagger={0.04}>
+                    {group.items.map((skill) => (
+                      <StaggerScaleItem key={skill.name}>
+                        <span
+                          className="px-3 py-1 text-sm rounded-full border flex items-center gap-2 hover:scale-110 transition-transform duration-200"
+                          style={{
+                            backgroundColor: "var(--theme-glass)",
+                            borderColor: "var(--theme-panel-border)",
+                            color: "var(--theme-foreground)",
+                          }}
+                        >
+                          {skill.icon && <skill.icon style={{ color: "var(--theme-accent)" }} />}
+                          {skill.name}
+                        </span>
+                      </StaggerScaleItem>
+                    ))}
+                  </StaggerContainer>
                 </div>
-              </div>
-              <div>
-                <h4 className="font-semibold mb-3" style={{ color: "var(--theme-accent)" }}>
-                  Frontend
-                </h4>
-                <div className="flex flex-wrap gap-2">
-                  {skills.frontend.map((skill) => (
-                    <span
-                      key={skill.name}
-                      className="px-3 py-1 text-sm rounded-full border flex items-center gap-2"
-                      style={{
-                        backgroundColor: "var(--theme-glass)",
-                        borderColor: "var(--theme-panel-border)",
-                        color: "var(--theme-foreground)",
-                      }}
-                    >
-                      {skill.icon && <skill.icon style={{ color: "var(--theme-accent)" }} />}
-                      {skill.name}
-                    </span>
-                  ))}
-                </div>
-              </div>
-              <div>
-                <h4 className="font-semibold mb-3" style={{ color: "var(--theme-accent)" }}>
-                  Backend & Database
-                </h4>
-                <div className="flex flex-wrap gap-2">
-                  {skills.backend.map((skill) => (
-                    <span
-                      key={skill.name}
-                      className="px-3 py-1 text-sm rounded-full border flex items-center gap-2"
-                      style={{
-                        backgroundColor: "var(--theme-glass)",
-                        borderColor: "var(--theme-panel-border)",
-                        color: "var(--theme-foreground)",
-                      }}
-                    >
-                      {skill.icon && <skill.icon style={{ color: "var(--theme-accent)" }} />}
-                      {skill.name}
-                    </span>
-                  ))}
-                </div>
-              </div>
-              <div>
-                <h4 className="font-semibold mb-3" style={{ color: "var(--theme-accent)" }}>
-                  Tools & Platforms
-                </h4>
-                <div className="flex flex-wrap gap-2">
-                  {skills.tools.map((skill) => (
-                    <span
-                      key={skill.name}
-                      className="px-3 py-1 text-sm rounded-full border flex items-center gap-2"
-                      style={{
-                        backgroundColor: "var(--theme-glass)",
-                        borderColor: "var(--theme-panel-border)",
-                        color: "var(--theme-foreground)",
-                      }}
-                    >
-                      {skill.icon && <skill.icon style={{ color: "var(--theme-accent)" }} />}
-                      {skill.name}
-                    </span>
-                  ))}
-                </div>
-              </div>
+              ))}
             </div>
           </GlassPanel>
-        </div>
-        
+        </FadeIn>
+
         {/* Certifications and Awards Grid */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mt-20">
           {/* Certifications */}
-          <div>
-            <div className="flex items-center gap-3 mb-6">
-              <AcademicCapIcon className="w-6 h-6" style={{ color: "var(--theme-accent)" }} />
-              <h2 className="text-2xl font-bold" style={{ color: "var(--theme-foreground)" }}>
-                Certifications
-              </h2>
-            </div>
-            <div className="space-y-4">
-              {certifications.map((cert) => (
-                <GlassPanel key={cert.id} className="p-4" hover>
-                  <div className="flex items-center gap-4">
-                    {cert.badgeId && (
-                      <div className="h-full">
-                        <img src={cert.badgeId} alt={`${cert.title} Badge`} className="w-16 h-16" />
+          <FadeIn delay={0.2}>
+            <div>
+              <div className="flex items-center gap-3 mb-6">
+                <AcademicCapIcon className="w-6 h-6" style={{ color: "var(--theme-accent)" }} />
+                <h2 className="text-2xl font-bold" style={{ color: "var(--theme-foreground)" }}>
+                  Certifications
+                </h2>
+              </div>
+              <StaggerContainer className="space-y-4" stagger={0.08}>
+                {certifications.map((cert) => (
+                  <StaggerItem key={cert.id}>
+                    <GlassPanel className="p-4" hover>
+                      <div className="flex items-center gap-4">
+                        {cert.badgeId && (
+                          <div className="h-full">
+                            <img src={cert.badgeId} alt={`${cert.title} Badge`} className="w-16 h-16" />
+                          </div>
+                        )}
+                        <div className="flex-1">
+                          <div className="flex justify-between items-start mb-2">
+                            <h3 className="font-semibold text-sm" style={{ color: "var(--theme-foreground)" }}>
+                              {cert.title}
+                            </h3>
+                            <span className="text-xs" style={{ color: "var(--theme-muted)" }}>
+                              {cert.date}
+                            </span>
+                          </div>
+                          <p className="text-sm mb-2" style={{ color: "var(--theme-accent)" }}>
+                            {cert.issuer} || <a
+                              href={cert.certificatelUrl}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="hover:underline text-xs"
+                            >
+                              View Certificate <ExternalLink size={12} style={{ display: "inline-block", marginBottom: "2px" }} />
+                            </a>
+                          </p>
+                          <p className="text-xs text-justify" style={{ color: "var(--theme-muted)" }}>
+                            {cert.description}
+                          </p>
+                        </div>
                       </div>
-                    )}
-                    <div className="flex-1">
+                    </GlassPanel>
+                  </StaggerItem>
+                ))}
+              </StaggerContainer>
+            </div>
+          </FadeIn>
+
+          {/* Honors & Awards */}
+          <FadeIn delay={0.35}>
+            <div>
+              <div className="flex items-center gap-3 mb-6">
+                <TrophyIcon className="w-6 h-6" style={{ color: "var(--theme-accent)" }} />
+                <h2 className="text-2xl font-bold" style={{ color: "var(--theme-foreground)" }}>
+                  Honors & Awards
+                </h2>
+              </div>
+              <StaggerContainer className="space-y-4" stagger={0.08} delay={0.15}>
+                {honorsAwards.map((award) => (
+                  <StaggerItem key={award.id}>
+                    <GlassPanel className="p-4" hover>
                       <div className="flex justify-between items-start mb-2">
                         <h3 className="font-semibold text-sm" style={{ color: "var(--theme-foreground)" }}>
-                          {cert.title}
+                          {award.title}
                         </h3>
                         <span className="text-xs" style={{ color: "var(--theme-muted)" }}>
-                          {cert.date}
+                          {award.date}
                         </span>
                       </div>
                       <p className="text-sm mb-2" style={{ color: "var(--theme-accent)" }}>
-                        {cert.issuer} || <a
-                          href={cert.certificatelUrl}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="hover:underline text-xs"
-                        >
-                          View Certificate <ExternalLink size={12} style={{ display: "inline-block", marginBottom: "2px" }} />
-                        </a>
+                        {award.issuer}
                       </p>
-                      <p className="text-xs text-justify" style={{ color: "var(--theme-muted)" }}>
-                        {cert.description}
+                      <p className="text-xs" style={{ color: "var(--theme-muted)" }}>
+                        {award.description}
                       </p>
-                    </div>
-                  </div>
-                </GlassPanel>
-              ))}
+                    </GlassPanel>
+                  </StaggerItem>
+                ))}
+              </StaggerContainer>
             </div>
-          </div>
-
-          {/* Honors & Awards */}
-          <div>
-            <div className="flex items-center gap-3 mb-6">
-              <TrophyIcon className="w-6 h-6" style={{ color: "var(--theme-accent)" }} />
-              <h2 className="text-2xl font-bold" style={{ color: "var(--theme-foreground)" }}>
-                Honors & Awards
-              </h2>
-            </div>
-            <div className="space-y-4">
-              {honorsAwards.map((award) => (
-                <GlassPanel key={award.id} className="p-4" hover>
-                  <div className="flex justify-between items-start mb-2">
-                    <h3 className="font-semibold text-sm" style={{ color: "var(--theme-foreground)" }}>
-                      {award.title}
-                    </h3>
-                    <span className="text-xs" style={{ color: "var(--theme-muted)" }}>
-                      {award.date}
-                    </span>
-                  </div>
-                  <p className="text-sm mb-2" style={{ color: "var(--theme-accent)" }}>
-                    {award.issuer}
-                  </p>
-                  <p className="text-xs" style={{ color: "var(--theme-muted)" }}>
-                    {award.description}
-                  </p>
-                </GlassPanel>
-              ))}
-            </div>
-          </div>
+          </FadeIn>
 
         </div>
 
