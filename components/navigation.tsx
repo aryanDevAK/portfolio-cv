@@ -3,6 +3,7 @@
 import { useState } from "react"
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline"
 import { ThemeToggle } from "./theme-toggle"
+import { motion, AnimatePresence } from "./motion-wrapper"
 
 const navItems = [
   { id: "home", label: "Home" },
@@ -54,22 +55,28 @@ export function Navigation({ activeSection, onSectionChange }: NavigationProps) 
               <button
                 key={item.id}
                 onClick={() => handleNavClick(item.id)}
-                className={`w-full px-4 py-3 rounded-xl text-left font-medium transition-all duration-200 hover:scale-105 ${
-                  activeSection === item.id ? "shadow-md" : ""
-                }`}
+                className="relative w-full px-4 py-3 rounded-xl text-left font-medium transition-colors duration-200"
                 style={{
-                  backgroundColor: activeSection === item.id ? "var(--theme-accent)" : "transparent",
                   color: activeSection === item.id ? "white" : "var(--theme-foreground)",
                 }}
               >
-                {item.label}
+                {/* Animated active pill */}
+                {activeSection === item.id && (
+                  <motion.div
+                    layoutId="nav-active-pill"
+                    className="absolute inset-0 rounded-xl shadow-md"
+                    style={{ backgroundColor: "var(--theme-accent)" }}
+                    transition={{ type: "spring", stiffness: 350, damping: 30 }}
+                  />
+                )}
+                <span className="relative z-10">{item.label}</span>
               </button>
             ))}
           </div>
         </div>
       </nav>
 
-      {/* Mobile Navigation - unchanged functionality */}
+      {/* Mobile Navigation */}
       <div className="lg:hidden">
         {/* Mobile Header */}
         <header className="fixed top-0 left-0 right-0 z-50 p-4">
@@ -96,37 +103,49 @@ export function Navigation({ activeSection, onSectionChange }: NavigationProps) 
           </div>
         </header>
 
-        {/* Mobile Menu */}
-        {isMobileMenuOpen && (
-          <div className="fixed inset-0 z-40 lg:hidden">
-            <div className="fixed inset-0 bg-black/20 backdrop-blur-sm" onClick={() => setIsMobileMenuOpen(false)} />
-            <div
-              className="fixed top-24 left-4 right-4 p-4 rounded-2xl backdrop-blur-md border"
-              style={{
-                backgroundColor: "var(--theme-glass)",
-                borderColor: "var(--theme-panel-border)",
-              }}
-            >
-              <div className="grid grid-cols-2 gap-2">
-                {navItems.map((item) => (
-                  <button
-                    key={item.id}
-                    onClick={() => handleNavClick(item.id)}
-                    className={`px-4 py-3 rounded-xl text-sm font-medium transition-all duration-200 ${
-                      activeSection === item.id ? "shadow-md" : ""
-                    }`}
-                    style={{
-                      backgroundColor: activeSection === item.id ? "var(--theme-accent)" : "transparent",
-                      color: activeSection === item.id ? "white" : "var(--theme-foreground)",
-                    }}
-                  >
-                    {item.label}
-                  </button>
-                ))}
-              </div>
+        {/* Mobile Menu - Animated */}
+        <AnimatePresence>
+          {isMobileMenuOpen && (
+            <div className="fixed inset-0 z-40 lg:hidden">
+              <motion.div
+                className="fixed inset-0 bg-black/20 backdrop-blur-sm"
+                onClick={() => setIsMobileMenuOpen(false)}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.2 }}
+              />
+              <motion.div
+                className="fixed top-24 left-4 right-4 p-4 rounded-2xl backdrop-blur-md border"
+                style={{
+                  backgroundColor: "var(--theme-glass)",
+                  borderColor: "var(--theme-panel-border)",
+                }}
+                initial={{ opacity: 0, y: -20, scale: 0.95 }}
+                animate={{ opacity: 1, y: 0, scale: 1 }}
+                exit={{ opacity: 0, y: -20, scale: 0.95 }}
+                transition={{ duration: 0.25, ease: [0.25, 0.46, 0.45, 0.94] }}
+              >
+                <div className="grid grid-cols-2 gap-2">
+                  {navItems.map((item) => (
+                    <button
+                      key={item.id}
+                      onClick={() => handleNavClick(item.id)}
+                      className={`px-4 py-3 rounded-xl text-sm font-medium transition-all duration-200 ${activeSection === item.id ? "shadow-md" : ""
+                        }`}
+                      style={{
+                        backgroundColor: activeSection === item.id ? "var(--theme-accent)" : "transparent",
+                        color: activeSection === item.id ? "white" : "var(--theme-foreground)",
+                      }}
+                    >
+                      {item.label}
+                    </button>
+                  ))}
+                </div>
+              </motion.div>
             </div>
-          </div>
-        )}
+          )}
+        </AnimatePresence>
       </div>
     </>
   )

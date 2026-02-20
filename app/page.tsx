@@ -8,6 +8,7 @@ import { ProjectsSection } from "@/components/sections/projects-section"
 import { ServicesSection } from "@/components/sections/services-section"
 import { ContactSection } from "@/components/sections/contact-section"
 import { BlogSection } from "@/components/sections/blog-section"
+import { PageTransition } from "@/components/motion-wrapper"
 
 export default function Portfolio() {
   const [activeSection, setActiveSection] = useState("home")
@@ -35,7 +36,11 @@ export default function Portfolio() {
     <main className="relative">
       <Navigation activeSection={activeSection} onSectionChange={setActiveSection} />
 
-      <div className="lg:ml-64 min-h-screen">{renderActiveSection()}</div>
+      <div className="lg:ml-64 min-h-screen">
+        <PageTransition transitionKey={activeSection}>
+          {renderActiveSection()}
+        </PageTransition>
+      </div>
     </main>
   )
 }
