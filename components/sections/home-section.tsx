@@ -183,7 +183,7 @@ const homeData = {
   links: {
     linkedin: "https://www.linkedin.com/in/aryankhatriak/",
     github: "https://github.com/aryankhatri",
-    resume: "https://drive.google.com/file/d/1JtdCBzVWxY9wY4uNhGuYfFJoYd0ZJPSq/view",
+    resume: "https://drive.google.com/file/d/1u35yVm5ZQ_5Hanshrywi3y5JP2HqnugT/view?usp=sharing",
     skillBadges: "https://www.credly.com/users/aryan-khatri.3912b0f6",
   },
 }
