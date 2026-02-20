@@ -1,14 +1,12 @@
 "use client"
 
-import { useEffect } from "react"
+import { useEffect, useState } from "react"
 import { GlassPanel } from "../glass-panel"
 import {
   EnvelopeIcon,
-  PhoneIcon,
   MapPinIcon,
   AcademicCapIcon,
   TrophyIcon,
-  ArrowTopRightOnSquareIcon,
 } from "@heroicons/react/24/outline"
 import { FaGithub, FaLinkedin } from "react-icons/fa"
 import { FileText, ExternalLink } from "lucide-react"
@@ -30,26 +28,156 @@ import {
   SiHtml5,
   SiCss3,
   SiNodedotjs,
-} from "react-icons/si";
-import { FaPython, FaDatabase } from "react-icons/fa6";
-import { RiNextjsFill } from "react-icons/ri";
+} from "react-icons/si"
+import { FaPython, FaDatabase } from "react-icons/fa6"
+import { RiNextjsFill } from "react-icons/ri"
 import {
   FadeIn,
   ScaleIn,
   StaggerContainer,
   StaggerItem,
   StaggerScaleItem,
+  motion,
+  AnimatePresence,
 } from "../motion-wrapper"
 
-// Fallback data from Aryan's resume
+/* ───────────────── Typewriter Effect ───────────────── */
+function Typewriter({ words, className, style }: { words: string[]; className?: string; style?: React.CSSProperties }) {
+  const [wordIdx, setWordIdx] = useState(0)
+  const [text, setText] = useState("")
+  const [isDeleting, setIsDeleting] = useState(false)
+
+  useEffect(() => {
+    const current = words[wordIdx]
+    const speed = isDeleting ? 40 : 80
+
+    if (!isDeleting && text === current) {
+      const pause = setTimeout(() => setIsDeleting(true), 2000)
+      return () => clearTimeout(pause)
+    }
+
+    if (isDeleting && text === "") {
+      setIsDeleting(false)
+      setWordIdx((prev) => (prev + 1) % words.length)
+      return
+    }
+
+    const timer = setTimeout(() => {
+      setText(isDeleting ? current.slice(0, text.length - 1) : current.slice(0, text.length + 1))
+    }, speed)
+
+    return () => clearTimeout(timer)
+  }, [text, isDeleting, wordIdx, words])
+
+  return (
+    <span className={className} style={style}>
+      {text}
+      <motion.span
+        animate={{ opacity: [1, 0, 1] }}
+        transition={{ duration: 0.8, repeat: Infinity }}
+        style={{ color: "var(--theme-accent)" }}
+      >
+        |
+      </motion.span>
+    </span>
+  )
+}
+
+/* ───────────────── Floating Particles ───────────────── */
+function FloatingParticles() {
+  const particles = Array.from({ length: 20 }, (_, i) => ({
+    id: i,
+    x: `${Math.random() * 100}%`,
+    y: `${Math.random() * 100}%`,
+    size: 2 + Math.random() * 4,
+    delay: Math.random() * 5,
+    dur: 8 + Math.random() * 12,
+  }))
+
+  return (
+    <div className="absolute inset-0 overflow-hidden pointer-events-none">
+      {particles.map((p) => (
+        <motion.div
+          key={p.id}
+          className="absolute rounded-full"
+          style={{
+            left: p.x,
+            top: p.y,
+            width: p.size,
+            height: p.size,
+            backgroundColor: "var(--theme-accent)",
+            opacity: 0.2,
+          }}
+          animate={{
+            y: [0, -30, 10, -15, 0],
+            x: [0, 15, -10, 5, 0],
+            opacity: [0.15, 0.35, 0.1, 0.3, 0.15],
+            scale: [1, 1.5, 0.8, 1.2, 1],
+          }}
+          transition={{
+            duration: p.dur,
+            repeat: Infinity,
+            delay: p.delay,
+            ease: "easeInOut",
+          }}
+        />
+      ))}
+    </div>
+  )
+}
+
+/* ───────────────── Orbit Ring ───────────────── */
+function OrbitRing({ radius, duration, delay, dotSize = 6 }: { radius: number; duration: number; delay: number; dotSize?: number }) {
+  return (
+    <div className="absolute" style={{ width: radius * 2, height: radius * 2, left: "50%", top: "50%", transform: "translate(-50%, -50%)" }}>
+      {/* the ring */}
+      <div
+        className="absolute inset-0 rounded-full"
+        style={{ border: "1px solid var(--theme-panel-border)", opacity: 0.4 }}
+      />
+      {/* orbiting dot */}
+      <motion.div
+        className="absolute rounded-full"
+        style={{
+          width: dotSize,
+          height: dotSize,
+          backgroundColor: "var(--theme-accent)",
+          top: -dotSize / 2,
+          left: "50%",
+          marginLeft: -dotSize / 2,
+          boxShadow: "0 0 10px var(--theme-accent)",
+        }}
+        animate={{ rotate: 360 }}
+        transition={{ duration, repeat: Infinity, ease: "linear", delay }}
+      // rotate around center
+      // We position the dot at the top of the ring and rotate the parent
+      />
+    </div>
+  )
+}
+
+/* ───────────────── Data ───────────────── */
 const homeData = {
   name: "Aryan Khatri",
   headline: "Software Engineer || Problem Solver",
-  intro:
-    (<>I am a Software Engineer ready to bring your dream products to the reality of mordern virtual world. Experienced in engineering sleek <i>Websites</i>, <i>Mobile Applications</i>, <i>ERP systems</i>, <i>CRM systems</i> and <i>Artificial intelligence systems</i> for MSME's of India. <br /><br />Experienced in maximizing application efficiency, driving performance enhancements and system throughput using advanced <i>DSA patterns</i>, <i>algorithmic optimization</i> and <i>System Design techniques</i>. <br /><br />I hold expertise in <strong>Data Science and Machine Learning</strong>, <strong>Backend Development</strong>, <strong>Frontend Development</strong> and Databases like <strong>SQL &amp; NoSQL</strong>.</>),
+  roles: [
+    "Full-Stack Developer",
+    "AI/ML Engineer",
+    "System Designer",
+    "Problem Solver",
+    "SaaS Builder",
+  ],
+  intro: (
+    <>
+      I am a Software Engineer ready to bring your dream products to the reality of the modern virtual world. Experienced in engineering sleek <i>Websites</i>, <i>Mobile Applications</i>, <i>ERP systems</i>, <i>CRM systems</i> and <i>Artificial Intelligence systems</i> for MSMEs of India.
+      <br /><br />
+      Experienced in maximizing application efficiency, driving performance enhancements and system throughput using advanced <i>DSA patterns</i>, <i>algorithmic optimization</i> and <i>System Design techniques</i>.
+      <br /><br />
+      I hold expertise in <strong>Data Science and Machine Learning</strong>, <strong>Backend Development</strong>, <strong>Frontend Development</strong> and Databases like <strong>SQL &amp; NoSQL</strong>.
+    </>
+  ),
   contact: {
     email: "aryankhatri.forwork@gmail.com",
-    // phone: "+91 78277-39709",
     location: "Delhi-NCR, India",
   },
   links: {
@@ -206,41 +334,128 @@ const skills = {
   ],
 }
 
+/* ───────────────── Component ───────────────── */
 export function HomeSection() {
   return (
-    <section className="min-h-screen flex items-center justify-center p-6 my-20">
-      <div className="max-w-6xl w-full">
-        {/* Hero Section */}
-        <div className="text-center mb-16">
-          <div className="mb-8">
-            <FadeIn delay={0}>
-              <h1
-                className="text-5xl md:text-6xl font-bold mb-4 text-balance"
-                style={{ color: "var(--theme-foreground)" }}
+    <section className="min-h-screen flex items-center justify-center p-6 my-20 relative">
+      <FloatingParticles />
+
+      <div className="max-w-6xl w-full relative z-10">
+        {/* ── Hero Section ── */}
+        <div className="text-center mb-16 relative">
+          {/* Orbiting rings decoration behind name */}
+          <div className="absolute inset-0 flex items-center justify-center pointer-events-none" style={{ top: "-40px" }}>
+            <div className="relative" style={{ width: 300, height: 300 }}>
+              <motion.div
+                className="absolute inset-0 rounded-full"
+                style={{ border: "1px dashed var(--theme-panel-border)", opacity: 0.3 }}
+                animate={{ rotate: 360 }}
+                transition={{ duration: 60, repeat: Infinity, ease: "linear" }}
+              />
+              <motion.div
+                className="absolute rounded-full"
+                style={{
+                  inset: 40,
+                  border: "1px dashed var(--theme-panel-border)",
+                  opacity: 0.2,
+                }}
+                animate={{ rotate: -360 }}
+                transition={{ duration: 45, repeat: Infinity, ease: "linear" }}
+              />
+            </div>
+          </div>
+
+          <div className="mb-8 relative">
+            {/* Greeting */}
+            <motion.div
+              initial={{ opacity: 0, y: -20, scale: 0.9 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              transition={{ duration: 0.6, ease: "easeOut" }}
+            >
+              <span
+                className="inline-flex items-center gap-2 text-sm font-semibold tracking-widest uppercase mb-6 px-5 py-2 rounded-full"
+                style={{
+                  color: "var(--theme-accent)",
+                  backgroundColor: "var(--theme-glass)",
+                  border: "1px solid var(--theme-panel-border)",
+                }}
               >
-                {homeData.name}
-              </h1>
-            </FadeIn>
-            <FadeIn delay={0.1}>
-              <p className="text-xl md:text-2xl mb-6" style={{ color: "var(--theme-accent)" }}>
-                {homeData.headline}
+                <motion.span
+                  animate={{ rotate: [0, 20, -10, 20, 0] }}
+                  transition={{ duration: 1.5, repeat: Infinity, repeatDelay: 3 }}
+                >
+                  👋
+                </motion.span>
+                Welcome to my portfolio
+              </span>
+            </motion.div>
+
+            {/* Name with letter-by-letter reveal */}
+            <div className="overflow-hidden mt-6">
+              <motion.h1
+                className="text-5xl md:text-7xl lg:text-8xl font-bold mb-4 text-balance tracking-tight"
+                style={{ color: "var(--theme-foreground)" }}
+                initial={{ y: 80, opacity: 0 }}
+                animate={{ y: 0, opacity: 1 }}
+                transition={{ duration: 0.8, delay: 0.2, ease: [0.25, 0.46, 0.45, 0.94] }}
+              >
+                {homeData.name.split("").map((char, i) => (
+                  <motion.span
+                    key={i}
+                    initial={{ opacity: 0, y: 40 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.4, delay: 0.3 + i * 0.04 }}
+                    style={{ display: "inline-block" }}
+                  >
+                    {char === " " ? "\u00A0" : char}
+                  </motion.span>
+                ))}
+              </motion.h1>
+            </div>
+
+            {/* Typewriter headline */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.8, duration: 0.5 }}
+            >
+              <p className="text-xl md:text-2xl lg:text-3xl mb-6 font-medium">
+                <span style={{ color: "var(--theme-muted)" }}>I'm a </span>
+                <Typewriter
+                  words={homeData.roles}
+                  style={{ color: "var(--theme-accent)", fontWeight: 700 }}
+                />
               </p>
-            </FadeIn>
-            <FadeIn delay={0.2}>
+            </motion.div>
+
+            {/* Intro text with staggered paragraphs */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 1, duration: 0.6 }}
+            >
               <p
                 className="text-lg leading-relaxed max-w-3xl mx-auto text-pretty text-justify"
                 style={{ color: "var(--theme-muted)" }}
               >
                 {homeData.intro}
               </p>
-            </FadeIn>
+            </motion.div>
           </div>
 
           {/* Contact Info */}
-          <ScaleIn delay={0.3}>
+          <motion.div
+            initial={{ opacity: 0, scale: 0.9, y: 20 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            transition={{ delay: 1.2, duration: 0.5 }}
+          >
             <GlassPanel className="p-6 mb-12 max-w-2xl mx-auto">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div className="flex items-center justify-center gap-2">
+                <motion.div
+                  className="flex items-center justify-center gap-2"
+                  whileHover={{ scale: 1.05, x: 5 }}
+                  transition={{ duration: 0.2 }}
+                >
                   <EnvelopeIcon className="w-5 h-5" style={{ color: "var(--theme-accent)" }} />
                   <a
                     href={`mailto:${homeData.contact.email}`}
@@ -249,70 +464,83 @@ export function HomeSection() {
                   >
                     {homeData.contact.email}
                   </a>
-                </div>
-                <div className="flex items-center justify-center gap-2">
+                </motion.div>
+                <motion.div
+                  className="flex items-center justify-center gap-2"
+                  whileHover={{ scale: 1.05, x: 5 }}
+                  transition={{ duration: 0.2 }}
+                >
                   <MapPinIcon className="w-5 h-5" style={{ color: "var(--theme-accent)" }} />
                   <span className="text-sm" style={{ color: "var(--theme-foreground)" }}>
                     {homeData.contact.location}
                   </span>
-                </div>
+                </motion.div>
               </div>
             </GlassPanel>
-          </ScaleIn>
+          </motion.div>
 
-          {/* CTA Buttons */}
-          <StaggerContainer className="flex flex-wrap justify-center gap-4 mb-16" delay={0.4} stagger={0.06}>
-            <StaggerItem>
-              <a
-                href={homeData.links.github}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center gap-2 px-6 py-3 rounded-xl font-medium transition-all duration-200 hover:scale-105"
-                style={{
-                  backgroundColor: "var(--theme-accent)",
-                  color: "white",
-                }}
-              >
-                GitHub
-                <FaGithub />
-              </a>
-            </StaggerItem>
-            <StaggerItem>
-              <a
-                href={homeData.links.linkedin}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center gap-2 px-6 py-3 rounded-xl font-medium transition-all duration-200 hover:scale-105 border"
-                style={{
-                  backgroundColor: "var(--theme-glass)",
-                  borderColor: "var(--theme-panel-border)",
-                  color: "var(--theme-foreground)",
-                }}
-              >
-                LinkedIn
-                <FaLinkedin style={{ color: "var(--theme-accent)" }} />
-              </a>
-            </StaggerItem>
-            <StaggerItem>
-              <a
-                href={homeData.links.resume}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center gap-2 px-6 py-3 rounded-xl font-medium transition-all duration-200 hover:scale-105 border"
-                style={{
-                  backgroundColor: "var(--theme-glass)",
-                  borderColor: "var(--theme-panel-border)",
-                  color: "var(--theme-foreground)",
-                }}
-              >
-                Resume
-                <FileText size={16} style={{ color: "var(--theme-accent)" }} />
-              </a>
-            </StaggerItem>
-          </StaggerContainer>
+          {/* CTA Buttons with glow effects */}
+          <motion.div
+            className="flex flex-wrap justify-center gap-4 mb-16"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 1.4, duration: 0.5 }}
+          >
+            <motion.a
+              href={homeData.links.github}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-2 px-7 py-3.5 rounded-xl font-semibold text-base"
+              style={{ backgroundColor: "var(--theme-accent)", color: "white" }}
+              whileHover={{
+                scale: 1.08,
+                y: -3,
+                boxShadow: "0 8px 30px color-mix(in srgb, var(--theme-accent) 40%, transparent)",
+              }}
+              whileTap={{ scale: 0.95 }}
+              transition={{ duration: 0.2 }}
+            >
+              <FaGithub className="w-5 h-5" />
+              GitHub
+            </motion.a>
+            <motion.a
+              href={homeData.links.linkedin}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-2 px-7 py-3.5 rounded-xl font-semibold text-base border"
+              style={{
+                backgroundColor: "var(--theme-glass)",
+                borderColor: "var(--theme-panel-border)",
+                color: "var(--theme-foreground)",
+              }}
+              whileHover={{ scale: 1.08, y: -3 }}
+              whileTap={{ scale: 0.95 }}
+              transition={{ duration: 0.2 }}
+            >
+              <FaLinkedin className="w-5 h-5" style={{ color: "#0A66C2" }} />
+              LinkedIn
+            </motion.a>
+            <motion.a
+              href={homeData.links.resume}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-2 px-7 py-3.5 rounded-xl font-semibold text-base border"
+              style={{
+                backgroundColor: "var(--theme-glass)",
+                borderColor: "var(--theme-panel-border)",
+                color: "var(--theme-foreground)",
+              }}
+              whileHover={{ scale: 1.08, y: -3 }}
+              whileTap={{ scale: 0.95 }}
+              transition={{ duration: 0.2 }}
+            >
+              <FileText size={18} style={{ color: "var(--theme-accent)" }} />
+              Resume
+            </motion.a>
+          </motion.div>
         </div>
 
-        {/* Skills Summary */}
+        {/* ── Skills Summary ── */}
         <FadeIn delay={0.5} className="mt-20">
           <GlassPanel className="p-8">
             <h3 className="text-2xl font-bold mb-6 text-center" style={{ color: "var(--theme-foreground)" }}>
@@ -334,17 +562,23 @@ export function HomeSection() {
                   <StaggerContainer className="flex flex-wrap gap-2" delay={0.6 + groupIdx * 0.1} stagger={0.04}>
                     {group.items.map((skill) => (
                       <StaggerScaleItem key={skill.name}>
-                        <span
-                          className="px-3 py-1 text-sm rounded-full border flex items-center gap-2 hover:scale-110 transition-transform duration-200"
+                        <motion.span
+                          className="px-3 py-1 text-sm rounded-full border flex items-center gap-2"
                           style={{
                             backgroundColor: "var(--theme-glass)",
                             borderColor: "var(--theme-panel-border)",
                             color: "var(--theme-foreground)",
                           }}
+                          whileHover={{
+                            scale: 1.15,
+                            y: -3,
+                            boxShadow: "0 4px 15px color-mix(in srgb, var(--theme-accent) 20%, transparent)",
+                          }}
+                          transition={{ duration: 0.2 }}
                         >
                           {skill.icon && <skill.icon style={{ color: "var(--theme-accent)" }} />}
                           {skill.name}
-                        </span>
+                        </motion.span>
                       </StaggerScaleItem>
                     ))}
                   </StaggerContainer>
@@ -354,13 +588,18 @@ export function HomeSection() {
           </GlassPanel>
         </FadeIn>
 
-        {/* Certifications and Awards Grid */}
+        {/* ── Certifications and Awards Grid ── */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mt-20">
           {/* Certifications */}
           <FadeIn delay={0.2}>
             <div>
               <div className="flex items-center gap-3 mb-6">
-                <AcademicCapIcon className="w-6 h-6" style={{ color: "var(--theme-accent)" }} />
+                <motion.div
+                  animate={{ rotate: [0, 10, -5, 0] }}
+                  transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
+                >
+                  <AcademicCapIcon className="w-6 h-6" style={{ color: "var(--theme-accent)" }} />
+                </motion.div>
                 <h2 className="text-2xl font-bold" style={{ color: "var(--theme-foreground)" }}>
                   Certifications
                 </h2>
@@ -368,38 +607,47 @@ export function HomeSection() {
               <StaggerContainer className="space-y-4" stagger={0.08}>
                 {certifications.map((cert) => (
                   <StaggerItem key={cert.id}>
-                    <GlassPanel className="p-4" hover>
-                      <div className="flex items-center gap-4">
-                        {cert.badgeId && (
-                          <div className="h-full">
-                            <img src={cert.badgeId} alt={`${cert.title} Badge`} className="w-16 h-16" />
+                    <motion.div whileHover={{ x: 6, scale: 1.01 }} transition={{ duration: 0.2 }}>
+                      <GlassPanel className="p-4" hover>
+                        <div className="flex items-center gap-4">
+                          {cert.badgeId && (
+                            <div className="h-full">
+                              <motion.img
+                                src={cert.badgeId}
+                                alt={`${cert.title} Badge`}
+                                className="w-16 h-16"
+                                whileHover={{ rotate: 10, scale: 1.1 }}
+                                transition={{ duration: 0.3 }}
+                              />
+                            </div>
+                          )}
+                          <div className="flex-1">
+                            <div className="flex justify-between items-start mb-2">
+                              <h3 className="font-semibold text-sm" style={{ color: "var(--theme-foreground)" }}>
+                                {cert.title}
+                              </h3>
+                              <span className="text-xs" style={{ color: "var(--theme-muted)" }}>
+                                {cert.date}
+                              </span>
+                            </div>
+                            <p className="text-sm mb-2" style={{ color: "var(--theme-accent)" }}>
+                              {cert.issuer} ||{" "}
+                              <a
+                                href={cert.certificatelUrl}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="hover:underline text-xs"
+                              >
+                                View Certificate <ExternalLink size={12} style={{ display: "inline-block", marginBottom: "2px" }} />
+                              </a>
+                            </p>
+                            <p className="text-xs text-justify" style={{ color: "var(--theme-muted)" }}>
+                              {cert.description}
+                            </p>
                           </div>
-                        )}
-                        <div className="flex-1">
-                          <div className="flex justify-between items-start mb-2">
-                            <h3 className="font-semibold text-sm" style={{ color: "var(--theme-foreground)" }}>
-                              {cert.title}
-                            </h3>
-                            <span className="text-xs" style={{ color: "var(--theme-muted)" }}>
-                              {cert.date}
-                            </span>
-                          </div>
-                          <p className="text-sm mb-2" style={{ color: "var(--theme-accent)" }}>
-                            {cert.issuer} || <a
-                              href={cert.certificatelUrl}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              className="hover:underline text-xs"
-                            >
-                              View Certificate <ExternalLink size={12} style={{ display: "inline-block", marginBottom: "2px" }} />
-                            </a>
-                          </p>
-                          <p className="text-xs text-justify" style={{ color: "var(--theme-muted)" }}>
-                            {cert.description}
-                          </p>
                         </div>
-                      </div>
-                    </GlassPanel>
+                      </GlassPanel>
+                    </motion.div>
                   </StaggerItem>
                 ))}
               </StaggerContainer>
@@ -410,7 +658,12 @@ export function HomeSection() {
           <FadeIn delay={0.35}>
             <div>
               <div className="flex items-center gap-3 mb-6">
-                <TrophyIcon className="w-6 h-6" style={{ color: "var(--theme-accent)" }} />
+                <motion.div
+                  animate={{ rotate: [0, 15, -10, 5, 0], scale: [1, 1.1, 1] }}
+                  transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
+                >
+                  <TrophyIcon className="w-6 h-6" style={{ color: "var(--theme-accent)" }} />
+                </motion.div>
                 <h2 className="text-2xl font-bold" style={{ color: "var(--theme-foreground)" }}>
                   Honors & Awards
                 </h2>
@@ -418,30 +671,30 @@ export function HomeSection() {
               <StaggerContainer className="space-y-4" stagger={0.08} delay={0.15}>
                 {honorsAwards.map((award) => (
                   <StaggerItem key={award.id}>
-                    <GlassPanel className="p-4" hover>
-                      <div className="flex justify-between items-start mb-2">
-                        <h3 className="font-semibold text-sm" style={{ color: "var(--theme-foreground)" }}>
-                          {award.title}
-                        </h3>
-                        <span className="text-xs" style={{ color: "var(--theme-muted)" }}>
-                          {award.date}
-                        </span>
-                      </div>
-                      <p className="text-sm mb-2" style={{ color: "var(--theme-accent)" }}>
-                        {award.issuer}
-                      </p>
-                      <p className="text-xs" style={{ color: "var(--theme-muted)" }}>
-                        {award.description}
-                      </p>
-                    </GlassPanel>
+                    <motion.div whileHover={{ x: 6, scale: 1.01 }} transition={{ duration: 0.2 }}>
+                      <GlassPanel className="p-4" hover>
+                        <div className="flex justify-between items-start mb-2">
+                          <h3 className="font-semibold text-sm" style={{ color: "var(--theme-foreground)" }}>
+                            {award.title}
+                          </h3>
+                          <span className="text-xs" style={{ color: "var(--theme-muted)" }}>
+                            {award.date}
+                          </span>
+                        </div>
+                        <p className="text-sm mb-2" style={{ color: "var(--theme-accent)" }}>
+                          {award.issuer}
+                        </p>
+                        <p className="text-xs" style={{ color: "var(--theme-muted)" }}>
+                          {award.description}
+                        </p>
+                      </GlassPanel>
+                    </motion.div>
                   </StaggerItem>
                 ))}
               </StaggerContainer>
             </div>
           </FadeIn>
-
         </div>
-
       </div>
     </section>
   )
