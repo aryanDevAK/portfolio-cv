@@ -2,6 +2,7 @@
 
 import { useState } from "react"
 import { Navigation } from "@/components/navigation"
+import { ChatBot } from "@/components/chatbot"
 import { HomeSection } from "@/components/sections/home-section"
 import { ExperienceSection } from "@/components/sections/experience-section"
 import { ProjectsSection } from "@/components/sections/projects-section"
@@ -35,6 +36,7 @@ export default function Portfolio() {
   return (
     <main className="relative">
       <Navigation activeSection={activeSection} onSectionChange={setActiveSection} />
+      <ChatBot />
 
       <div className="lg:ml-64 min-h-screen">
         <PageTransition transitionKey={activeSection}>

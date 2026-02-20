@@ -41,13 +41,13 @@ export const themes = {
   },
   romantic: {
     name: "Romantic",
-    background: "oklch(0.95 0.05 330)",
-    foreground: "oklch(0.2 0.05 330)",
-    panel: "rgba(244, 114, 182, 0.3)",
-    panelBorder: "rgba(236, 72, 153, 0.2)",
-    accent: "oklch(0.6 0.2 330)",
-    muted: "oklch(0.7 0.05 330)",
-    glass: "rgba(244, 114, 182, 0.2)",
+    background: "oklch(0.97 0.02 350)",
+    foreground: "oklch(0.2 0.03 350)",
+    panel: "rgba(255, 228, 235, 0.55)",
+    panelBorder: "rgba(190, 100, 130, 0.15)",
+    accent: "oklch(0.55 0.15 350)",
+    muted: "oklch(0.55 0.03 350)",
+    glass: "rgba(255, 235, 240, 0.4)",
   },
   matrix: {
     name: "Matrix",
@@ -79,6 +79,26 @@ export const themes = {
     muted: "oklch(0.6 0 0)",
     glass: "rgba(33, 38, 45, 0.6)",
   },
+  neon: {
+    name: "Neon",
+    background: "oklch(0.06 0.02 270)",
+    foreground: "oklch(0.95 0.02 200)",
+    panel: "rgba(10, 10, 35, 0.85)",
+    panelBorder: "rgba(0, 255, 255, 0.25)",
+    accent: "oklch(0.75 0.2 195)",
+    muted: "oklch(0.6 0.05 270)",
+    glass: "rgba(10, 10, 40, 0.7)",
+  },
+  mystic: {
+    name: "Mystic",
+    background: "oklch(0.08 0.04 290)",
+    foreground: "oklch(0.92 0.03 70)",
+    panel: "rgba(20, 10, 45, 0.8)",
+    panelBorder: "rgba(255, 170, 50, 0.2)",
+    accent: "oklch(0.72 0.18 65)",
+    muted: "oklch(0.6 0.04 290)",
+    glass: "rgba(25, 12, 50, 0.65)",
+  },
 } as const
 
 export type ThemeName = keyof typeof themes
@@ -97,7 +117,7 @@ export const applyTheme = (themeName: ThemeName) => {
 }
 
 export const getStoredTheme = (): ThemeName => {
-  if (typeof window === "undefined") return "paper"
+  if (typeof window === "undefined") return "mystic"
   return (localStorage.getItem("portfolio-theme") as ThemeName) || "paper"
 }
 
