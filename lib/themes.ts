@@ -117,7 +117,7 @@ export const applyTheme = (themeName: ThemeName) => {
 }
 
 export const getStoredTheme = (): ThemeName => {
-  if (typeof window === "undefined") return "paper"
+  if (typeof window === "undefined") return "mystic"
   return (localStorage.getItem("portfolio-theme") as ThemeName) || "paper"
 }
 
