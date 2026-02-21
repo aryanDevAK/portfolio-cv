@@ -38,14 +38,14 @@
   --sidebar-border: oklch(0.922 0 0);
   --sidebar-ring: oklch(0.708 0 0);
 
-  /* Added custom theme variables for Apple glass design */
-  --theme-background: oklch(0.98 0.01 85);
-  --theme-foreground: oklch(0.2 0.02 85);
-  --theme-panel: rgba(255, 252, 248, 0.7);
-  --theme-panel-border: rgba(139, 69, 19, 0.1);
-  --theme-accent: oklch(0.6 0.15 25);
-  --theme-muted: oklch(0.7 0.02 85);
-  --theme-glass: rgba(255, 252, 248, 0.6);
+  /* Custom theme variables — defaults to Light theme */
+  --theme-background: oklch(1 0 0);
+  --theme-foreground: oklch(0.15 0 0);
+  --theme-panel: rgba(255, 255, 255, 0.7);
+  --theme-panel-border: rgba(0, 0, 0, 0.08);
+  --theme-accent: oklch(0.5 0.2 250);
+  --theme-muted: oklch(0.6 0 0);
+  --theme-glass: rgba(255, 255, 255, 0.6);
 }
 
 .dark {
@@ -215,6 +215,27 @@ body::after {
   body::before,
   body::after {
     animation: none !important;
+  }
+}
+
+/* Disable heavy bg orbs on mobile for performance */
+@media (max-width: 767px) {
+  body::before,
+  body::after {
+    display: none !important;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 1023px) {
+  body::before {
+    width: 350px;
+    height: 350px;
+    opacity: 0.1;
+  }
+  body::after {
+    width: 300px;
+    height: 300px;
+    opacity: 0.1;
   }
 }
 
