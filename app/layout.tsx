@@ -12,6 +12,9 @@ export const metadata: Metadata = {
   description:
     "Full Stack Software Developer with expertise in building SAAS products, AI integrated platforms and Automation Software",
   generator: "aryanDevAK",
+  icons: {
+    icon: "/tab2.png",
+  },
 }
 
 export default function RootLayout({
