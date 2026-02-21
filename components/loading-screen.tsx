@@ -2,45 +2,60 @@
 
 import { useEffect, useState } from "react"
 import { motion } from "@/components/motion-wrapper"
+import { useIsMobile } from "@/hooks/use-mobile"
 
 /**
  * Doctor Strange – Eye of Agamotto loading screen.
- * Smooth, cinematic sequence driven by a single timer
- * so every layer cross-fades organically.
+ * Smooth cinematic sequence. Lighter on mobile to prevent lag.
  */
 export function LoadingScreen({ onComplete }: { onComplete: () => void }) {
     const [visible, setVisible] = useState(true)
+    const isMobile = useIsMobile()
 
     useEffect(() => {
-        // Total sequence: ~3.8s → fade out starts → 0.9s fade → done
+        const dur = isMobile ? 2800 : 3800
         const timer = setTimeout(() => {
             setVisible(false)
-            setTimeout(onComplete, 1000) // let the fade-out finish
-        }, 3800)
+            setTimeout(onComplete, 900)
+        }, dur)
         return () => clearTimeout(timer)
-    }, [onComplete])
+    }, [onComplete, isMobile])
 
-    /* ring configs */
-    const mandalaRings = [
-        { r: 55, dur: 10, bw: 1.8, dash: "6 6", d: 0.6, dir: 1 },
-        { r: 95, dur: 14, bw: 1.2, dash: "4 10", d: 0.75, dir: -1 },
-        { r: 140, dur: 18, bw: 0.8, dash: "3 14", d: 0.9, dir: 1 },
-        { r: 190, dur: 22, bw: 0.6, dash: "8 18", d: 1.05, dir: -1 },
-        { r: 245, dur: 28, bw: 0.4, dash: "2 22", d: 1.2, dir: 1 },
-    ]
+    /* ring configs (fewer on mobile) */
+    const mandalaRings = isMobile
+        ? [
+            { r: 50, dur: 10, bw: 1.5, dash: "6 6", d: 0.5, dir: 1 },
+            { r: 90, dur: 14, bw: 1, dash: "4 10", d: 0.65, dir: -1 },
+            { r: 130, dur: 18, bw: 0.6, dash: "3 14", d: 0.8, dir: 1 },
+        ]
+        : [
+            { r: 55, dur: 10, bw: 1.8, dash: "6 6", d: 0.6, dir: 1 },
+            { r: 95, dur: 14, bw: 1.2, dash: "4 10", d: 0.75, dir: -1 },
+            { r: 140, dur: 18, bw: 0.8, dash: "3 14", d: 0.9, dir: 1 },
+            { r: 190, dur: 22, bw: 0.6, dash: "8 18", d: 1.05, dir: -1 },
+            { r: 245, dur: 28, bw: 0.4, dash: "2 22", d: 1.2, dir: 1 },
+        ]
 
     /* portal expand rings */
-    const portalWaves = [
-        { delay: 2.4, dur: 1.6, bw: 2 },
-        { delay: 2.7, dur: 1.6, bw: 1.5 },
-        { delay: 3.0, dur: 1.6, bw: 1 },
-    ]
+    const portalWaves = isMobile
+        ? [
+            { delay: 1.6, dur: 1.2, bw: 2 },
+            { delay: 1.9, dur: 1.2, bw: 1 },
+        ]
+        : [
+            { delay: 2.4, dur: 1.6, bw: 2 },
+            { delay: 2.7, dur: 1.6, bw: 1.5 },
+            { delay: 3.0, dur: 1.6, bw: 1 },
+        ]
 
-    /* energy rays */
-    const rays = Array.from({ length: 8 }, (_, i) => ({
-        angle: i * 45,
+    /* energy rays (fewer on mobile) */
+    const rayCount = isMobile ? 4 : 8
+    const rays = Array.from({ length: rayCount }, (_, i) => ({
+        angle: i * (360 / rayCount),
         delay: 0.35 + i * 0.04,
     }))
+
+    const totalDur = isMobile ? 2.8 : 3.8
 
     return (
         <motion.div
@@ -53,23 +68,22 @@ export function LoadingScreen({ onComplete }: { onComplete: () => void }) {
             <motion.div
                 className="absolute rounded-full"
                 style={{
-                    width: 900,
-                    height: 900,
+                    width: isMobile ? 500 : 900,
+                    height: isMobile ? 500 : 900,
                     background: "radial-gradient(circle, var(--theme-accent) 0%, transparent 65%)",
                     filter: "blur(80px)",
                 }}
                 initial={{ opacity: 0, scale: 0.3 }}
                 animate={{ opacity: [0, 0.06, 0.12, 0.08], scale: [0.3, 0.8, 1.1, 1] }}
-                transition={{ duration: 3.5, ease: "easeInOut" }}
+                transition={{ duration: totalDur * 0.9, ease: "easeInOut" }}
             />
 
             {/* ━━━ STONE CORE ━━━ */}
-            {/* Outer halo (appears first, soft) */}
             <motion.div
                 className="absolute rounded-full"
                 style={{
-                    width: 70,
-                    height: 70,
+                    width: isMobile ? 50 : 70,
+                    height: isMobile ? 50 : 70,
                     background: "radial-gradient(circle, var(--theme-accent) 0%, transparent 70%)",
                 }}
                 initial={{ scale: 0, opacity: 0 }}
@@ -77,12 +91,12 @@ export function LoadingScreen({ onComplete }: { onComplete: () => void }) {
                 transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
             />
 
-            {/* Core gem with breathing glow */}
+            {/* Core gem */}
             <motion.div
                 className="absolute rounded-full"
                 style={{
-                    width: 14,
-                    height: 14,
+                    width: isMobile ? 10 : 14,
+                    height: isMobile ? 10 : 14,
                     backgroundColor: "var(--theme-accent)",
                 }}
                 initial={{ scale: 0, opacity: 0 }}
@@ -98,7 +112,7 @@ export function LoadingScreen({ onComplete }: { onComplete: () => void }) {
                     ],
                 }}
                 transition={{
-                    duration: 3.5,
+                    duration: totalDur * 0.9,
                     times: [0, 0.15, 0.4, 0.7, 1],
                     ease: [0.16, 1, 0.3, 1],
                 }}
@@ -118,14 +132,10 @@ export function LoadingScreen({ onComplete }: { onComplete: () => void }) {
                     }}
                     initial={{ height: 0, opacity: 0 }}
                     animate={{
-                        height: [0, 100, 60, 0],
+                        height: [0, isMobile ? 60 : 100, isMobile ? 30 : 60, 0],
                         opacity: [0, 0.45, 0.2, 0],
                     }}
-                    transition={{
-                        duration: 1.2,
-                        delay: ray.delay,
-                        ease: [0.16, 1, 0.3, 1],
-                    }}
+                    transition={{ duration: 1.2, delay: ray.delay, ease: [0.16, 1, 0.3, 1] }}
                 />
             ))}
 
@@ -147,26 +157,14 @@ export function LoadingScreen({ onComplete }: { onComplete: () => void }) {
                         rotate: { duration: ring.dur, repeat: Infinity, ease: "linear", delay: ring.d },
                     }}
                 >
-                    <svg
-                        width={ring.r * 2}
-                        height={ring.r * 2}
-                        viewBox={`0 0 ${ring.r * 2} ${ring.r * 2}`}
-                        fill="none"
-                    >
-                        <circle
-                            cx={ring.r}
-                            cy={ring.r}
-                            r={ring.r - 2}
-                            stroke="var(--theme-accent)"
-                            strokeWidth={ring.bw}
-                            strokeDasharray={ring.dash}
-                        />
+                    <svg width={ring.r * 2} height={ring.r * 2} viewBox={`0 0 ${ring.r * 2} ${ring.r * 2}`} fill="none">
+                        <circle cx={ring.r} cy={ring.r} r={ring.r - 2} stroke="var(--theme-accent)" strokeWidth={ring.bw} strokeDasharray={ring.dash} />
                     </svg>
                 </motion.div>
             ))}
 
-            {/* ── Orbiting sparks on rings ── */}
-            {[55, 140, 245].map((radius, i) => (
+            {/* ── Orbiting sparks (desktop only) ── */}
+            {!isMobile && [55, 140, 245].map((radius, i) => (
                 <motion.div
                     key={`spark-${i}`}
                     className="absolute"
@@ -194,8 +192,8 @@ export function LoadingScreen({ onComplete }: { onComplete: () => void }) {
                 </motion.div>
             ))}
 
-            {/* ── Rune marks at cardinal points on middle ring ── */}
-            {[0, 72, 144, 216, 288].map((angle, i) => (
+            {/* ── Rune marks (desktop only) ── */}
+            {!isMobile && [0, 72, 144, 216, 288].map((angle, i) => (
                 <motion.div
                     key={`rune-${i}`}
                     className="absolute"
@@ -213,7 +211,7 @@ export function LoadingScreen({ onComplete }: { onComplete: () => void }) {
                 />
             ))}
 
-            {/* ━━━ PORTAL EXPAND — THE REVEAL ━━━ */}
+            {/* ━━━ PORTAL EXPAND ━━━ */}
             {portalWaves.map((pw, i) => (
                 <motion.div
                     key={`pw-${i}`}
@@ -232,7 +230,7 @@ export function LoadingScreen({ onComplete }: { onComplete: () => void }) {
 
             {/* ━━━ NAME + TITLE ━━━ */}
             <motion.div
-                className="absolute text-center pointer-events-none"
+                className="absolute text-center pointer-events-none px-4"
                 initial={{ opacity: 0, scale: 0.9 }}
                 animate={{
                     opacity: [0, 0, 1, 1, 0],
@@ -240,13 +238,13 @@ export function LoadingScreen({ onComplete }: { onComplete: () => void }) {
                     y: [15, 15, 0, 0, -8],
                 }}
                 transition={{
-                    duration: 3.8,
+                    duration: totalDur,
                     times: [0, 0.2, 0.35, 0.75, 1],
                     ease: "easeInOut",
                 }}
             >
                 <h1
-                    className="text-3xl md:text-4xl font-bold tracking-[0.15em]"
+                    className="text-2xl md:text-4xl font-bold tracking-[0.15em]"
                     style={{ color: "var(--theme-accent)" }}
                 >
                     ARYAN KHATRI
@@ -256,7 +254,7 @@ export function LoadingScreen({ onComplete }: { onComplete: () => void }) {
                     style={{ color: "var(--theme-muted)" }}
                     initial={{ opacity: 0 }}
                     animate={{ opacity: [0, 0, 0.7, 0.7, 0] }}
-                    transition={{ duration: 3.8, times: [0, 0.3, 0.4, 0.75, 1] }}
+                    transition={{ duration: totalDur, times: [0, 0.3, 0.4, 0.75, 1] }}
                 >
                     Software Engineer
                 </motion.p>

@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { Navigation } from "@/components/navigation"
 import { ChatBot } from "@/components/chatbot"
 import { LoadingScreen } from "@/components/loading-screen"
@@ -12,10 +12,17 @@ import { ServicesSection } from "@/components/sections/services-section"
 import { ContactSection } from "@/components/sections/contact-section"
 import { BlogSection } from "@/components/sections/blog-section"
 import { PageTransition } from "@/components/motion-wrapper"
+import { applyTheme, getStoredTheme } from "@/lib/themes"
 
 export default function Portfolio() {
   const [activeSection, setActiveSection] = useState("home")
   const [isLoading, setIsLoading] = useState(true)
+
+  // Apply theme IMMEDIATELY so loading screen uses correct colors
+  useEffect(() => {
+    const stored = getStoredTheme()
+    applyTheme(stored)
+  }, [])
 
   const renderActiveSection = () => {
     switch (activeSection) {

@@ -1,6 +1,7 @@
 "use client"
 
 import { useEffect, useState } from "react"
+import { useIsMobile } from "@/hooks/use-mobile"
 import { GlassPanel } from "../glass-panel"
 import {
   EnvelopeIcon,
@@ -85,7 +86,9 @@ function Typewriter({ words, className, style }: { words: string[]; className?: 
 
 /* ───────────────── Floating Particles ───────────────── */
 function FloatingParticles() {
-  const particles = Array.from({ length: 20 }, (_, i) => ({
+  const isMobile = useIsMobile()
+  const count = isMobile ? 6 : 20
+  const particles = Array.from({ length: count }, (_, i) => ({
     id: i,
     x: `${Math.random() * 100}%`,
     y: `${Math.random() * 100}%`,
@@ -337,7 +340,7 @@ const skills = {
 /* ───────────────── Component ───────────────── */
 export function HomeSection() {
   return (
-    <section className="min-h-screen flex items-center justify-center p-6 my-20 relative">
+    <section className="min-h-screen flex items-center justify-center p-4 md:p-6 my-10 md:my-20 relative">
       <FloatingParticles />
 
       <div className="max-w-6xl w-full relative z-10">
@@ -393,7 +396,7 @@ export function HomeSection() {
             {/* Name with letter-by-letter reveal */}
             <div className="overflow-hidden mt-6">
               <motion.h1
-                className="text-5xl md:text-7xl lg:text-8xl font-bold mb-4 text-balance tracking-tight"
+                className="text-4xl md:text-7xl lg:text-8xl font-bold mb-4 text-balance tracking-tight"
                 style={{ color: "var(--theme-foreground)" }}
                 initial={{ y: 80, opacity: 0 }}
                 animate={{ y: 0, opacity: 1 }}
@@ -481,7 +484,7 @@ export function HomeSection() {
 
           {/* CTA Buttons with glow effects */}
           <motion.div
-            className="flex flex-wrap justify-center gap-4 mb-16"
+            className="flex flex-col sm:flex-row flex-wrap justify-center gap-3 md:gap-4 mb-12 md:mb-16 px-2"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 1.4, duration: 0.5 }}
@@ -490,7 +493,7 @@ export function HomeSection() {
               href={homeData.links.github}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center gap-2 px-7 py-3.5 rounded-xl font-semibold text-base"
+              className="flex items-center gap-2 px-5 md:px-7 py-3 md:py-3.5 rounded-xl font-semibold text-sm md:text-base w-full sm:w-auto justify-center"
               style={{ backgroundColor: "var(--theme-accent)", color: "white" }}
               whileHover={{
                 scale: 1.08,
@@ -507,7 +510,7 @@ export function HomeSection() {
               href={homeData.links.linkedin}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center gap-2 px-7 py-3.5 rounded-xl font-semibold text-base border"
+              className="flex items-center gap-2 px-5 md:px-7 py-3 md:py-3.5 rounded-xl font-semibold text-sm md:text-base border w-full sm:w-auto justify-center"
               style={{
                 backgroundColor: "var(--theme-glass)",
                 borderColor: "var(--theme-panel-border)",
@@ -524,7 +527,7 @@ export function HomeSection() {
               href={homeData.links.resume}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center gap-2 px-7 py-3.5 rounded-xl font-semibold text-base border"
+              className="flex items-center gap-2 px-5 md:px-7 py-3 md:py-3.5 rounded-xl font-semibold text-sm md:text-base border w-full sm:w-auto justify-center"
               style={{
                 backgroundColor: "var(--theme-glass)",
                 borderColor: "var(--theme-panel-border)",

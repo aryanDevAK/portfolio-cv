@@ -8,10 +8,10 @@ import { AnimatedBackground } from "../components/animated-background"
 import "./globals.css"
 
 export const metadata: Metadata = {
-  title: "Aryan Khatri - Software Developer",
+  title: "Aryan Khatri - Software Engineer",
   description:
     "Full Stack Software Developer with expertise in building SAAS products, AI integrated platforms and Automation Software",
-  generator: "v0.app",
+  generator: "aryanDevAK",
 }
 
 export default function RootLayout({
