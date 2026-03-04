@@ -162,21 +162,46 @@ function OrbitRing({ radius, duration, delay, dotSize = 6 }: { radius: number; d
 /* ───────────────── Data ───────────────── */
 const homeData = {
   name: "Aryan Khatri",
-  headline: "Software Engineer || Problem Solver",
+  headline: "AI & Software Engineer || Problem Solver",
   roles: [
-    "Full-Stack Developer",
     "AI/ML Engineer",
     "System Designer",
-    "Problem Solver",
-    "SaaS Builder",
+    "Full-Stack Developer",
+    // "Problem Solver",
+    // "SaaS Builder",
   ],
   intro: (
     <>
-      I am a Software Engineer ready to bring your dream products to the reality of the modern virtual world. Experienced in engineering sleek <i>Websites</i>, <i>Mobile Applications</i>, <i>ERP systems</i>, <i>CRM systems</i> and <i>Artificial Intelligence systems</i> for MSMEs of India.
-      <br /><br />
-      Experienced in maximizing application efficiency, driving performance enhancements and system throughput using advanced <i>DSA patterns</i>, <i>algorithmic optimization</i> and <i>System Design techniques</i>.
-      <br /><br />
-      I hold expertise in <strong>Data Science and Machine Learning</strong>, <strong>Backend Development</strong>, <strong>Frontend Development</strong> and Databases like <strong>SQL &amp; NoSQL</strong>.
+      I'm a <b>AI & Software Engineer</b> who builds
+      real products for Indian startups and MSMEs — the kind that
+      actually ship, scale, and solve problems.
+      <br />
+      <br />
+      I started my career at <b>Intel</b> and <b>Infosys</b>, where
+      I learned how serious engineering is done at scale. But I quickly
+      realized I wanted to be closer to the problem — working directly
+      with founders, understanding their business, and building
+      solutions end to end. So I went independent.
+      <br />
+      <br />
+      Since then I've worked with <b>50+ clients</b> across{" "}
+      <b>FinTech</b>, <b>HealthTech</b>, and <b>Enterprise Software</b>.
+      Some needed an AI-powered tool built from scratch. Some needed
+      their entire operations digitized. Some just needed someone who
+      actually understood their business and could build for it —
+      without the fluff.
+      <br />
+      <br />
+      That's what I do. No large agency overhead, no endless back and
+      forth — just clean, high-quality engineering delivered by someone
+      who genuinely cares about what they build.
+      <br />
+      <br />
+      My core work lives in{" "}
+      <b>AI & Machine Learning</b>,{" "}
+      <b>Full-Stack Web & Mobile Development</b>, and{" "}
+      <b>ERP & CRM Systems</b> built for the way Indian businesses
+      actually operate.
     </>
   ),
   contact: {

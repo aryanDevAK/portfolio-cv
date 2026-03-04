@@ -8,9 +8,9 @@ import { AnimatedBackground } from "../components/animated-background"
 import "./globals.css"
 
 export const metadata: Metadata = {
-  title: "Aryan Khatri - Software Engineer",
+  title: "Aryan Khatri - AI & Software Engineer",
   description:
-    "Full Stack Software Developer with expertise in building SAAS products, AI integrated platforms and Automation Software",
+    "AI & Software Engineer helping Indian startups and MSMEs build products that actually work — not just prototypes that die in a boardroom presentation.",
   generator: "aryanDevAK",
   icons: {
     icon: "/tab2.png",
