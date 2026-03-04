@@ -1,6 +1,7 @@
 "use client"
 
 import { useState, useRef, useEffect } from "react"
+import Image from "next/image"
 import { motion, AnimatePresence } from "@/components/motion-wrapper"
 import {
     ChatBubbleLeftRightIcon,
@@ -17,6 +18,7 @@ import {
     EnvelopeIcon,
     LightBulbIcon,
     CommandLineIcon,
+    PaperAirplaneIcon,
 } from "@heroicons/react/24/outline"
 
 /* ─────────── Simple Markdown → JSX renderer ─────────── */
@@ -157,9 +159,14 @@ const qaBank: Record<string, QA> = {
             "A few things that make Aryan stand out:\n\n• Led and coordinated tech events with 1,000+ participants at CUFEST\n• Built an AI customer support agent before \"AI agents\" became an industry buzzword\n• Designed this entire portfolio from scratch — every animation, every component\n• Believes in shipping fast and iterating faster\n• Runs on coffee and curiosity\n\nAnd yes — I'm ARIA, a rule-based assistant built right into this portfolio. No API calls, no cloud dependencies. Just clean engineering.",
         followUp: ["skills", "projects", "contact"],
     },
+    message_me: {
+        question: "Message Me",
+        icon: PaperAirplaneIcon,
+        answer: "I can help you send a direct message to Aryan right here.\n\nTo start, what is your full name?",
+    },
 }
 
-const initialQuestions = ["greeting", "skills", "experience", "projects", "services", "fun"]
+const initialQuestions = ["greeting", "skills", "experience", "projects", "services", "fun", "message_me"]
 
 /* ─────────────── Chat Message Types ─────────────── */
 
@@ -177,6 +184,12 @@ export function ChatBot() {
     const [messages, setMessages] = useState<Message[]>([])
     const [isTyping, setIsTyping] = useState(false)
     const [hasNotification, setHasNotification] = useState(true)
+
+    // Contact form state
+    const [contactState, setContactState] = useState<"idle" | "awaiting_name" | "awaiting_email" | "awaiting_message" | "sending">("idle")
+    const [contactData, setContactData] = useState({ name: "", email: "", message: "" })
+    const [inputText, setInputText] = useState("")
+
     const scrollRef = useRef<HTMLDivElement>(null)
     const msgIdRef = useRef(0)
 
@@ -225,16 +238,25 @@ export function ChatBot() {
                 id: nextId(),
                 type: "bot",
                 text: qa.answer,
-                options: qa.followUp || initialQuestions,
+                options: key === "message_me" ? undefined : (qa.followUp || initialQuestions),
             }
             setMessages((prev) => [...prev, botMsg])
             setIsTyping(false)
+
+            if (key === "message_me") {
+                setContactState("awaiting_name")
+                setContactData({ name: "", email: "", message: "" })
+                setInputText("")
+            }
         }, 800 + Math.random() * 600)
     }
 
     const resetChat = () => {
         setMessages([])
         msgIdRef.current = 0
+        setContactState("idle")
+        setContactData({ name: "", email: "", message: "" })
+        setInputText("")
         setIsTyping(true)
         setTimeout(() => {
             setMessages([
@@ -247,6 +269,78 @@ export function ChatBot() {
             ])
             setIsTyping(false)
         }, 400)
+    }
+
+    const handleSendText = async (e?: React.FormEvent) => {
+        e?.preventDefault()
+        if (!inputText.trim() || contactState === "idle" || contactState === "sending") return
+
+        const currentText = inputText.trim()
+        setInputText("")
+
+        // Add user message to chat
+        setMessages((prev) => [...prev, { id: nextId(), type: "user", text: currentText }])
+        setIsTyping(true)
+
+        if (contactState === "awaiting_name") {
+            setContactData(prev => ({ ...prev, name: currentText }))
+            setTimeout(() => {
+                setMessages((prev) => [...prev, {
+                    id: nextId(),
+                    type: "bot",
+                    text: `Nice to meet you, ${currentText}. What's your email address?`
+                }])
+                setIsTyping(false)
+                setContactState("awaiting_email")
+            }, 600)
+        } else if (contactState === "awaiting_email") {
+            setContactData(prev => ({ ...prev, email: currentText }))
+            setTimeout(() => {
+                setMessages((prev) => [...prev, {
+                    id: nextId(),
+                    type: "bot",
+                    text: `Got it. Now, what message would you like to send to Aryan?`
+                }])
+                setIsTyping(false)
+                setContactState("awaiting_message")
+            }, 600)
+        } else if (contactState === "awaiting_message") {
+            const finalData = { ...contactData, message: currentText }
+            setContactData(finalData)
+            setContactState("sending")
+
+            try {
+                const fd = new FormData()
+                fd.append("access_key", "29788b3a-868c-4ea4-8954-13c4ca5bebc5")
+                fd.append("subject", `Portfolio Contact: Message from ${finalData.name} via Chatbot`)
+                fd.append("name", finalData.name)
+                fd.append("email", finalData.email)
+                fd.append("message", finalData.message)
+
+                const res = await fetch("https://api.web3forms.com/submit", {
+                    method: "POST",
+                    body: fd,
+                })
+                const data = await res.json()
+
+                if (data.success) {
+                    setMessages((prev) => [...prev, {
+                        id: nextId(), type: "bot", text: "Your message has been sent successfully! Aryan will get back to you soon.", options: initialQuestions
+                    }])
+                } else {
+                    setMessages((prev) => [...prev, {
+                        id: nextId(), type: "bot", text: "Something went wrong while sending your message. Please try again or use the contact form.", options: initialQuestions
+                    }])
+                }
+            } catch (err) {
+                setMessages((prev) => [...prev, {
+                    id: nextId(), type: "bot", text: "Network error. Please try again later.", options: initialQuestions
+                }])
+            } finally {
+                setIsTyping(false)
+                setContactState("idle")
+            }
+        }
     }
 
     return (
@@ -269,7 +363,9 @@ export function ChatBot() {
                         whileTap={{ scale: 0.9 }}
                         transition={{ type: "spring", stiffness: 300, damping: 20 }}
                     >
-                        <CommandLineIcon className="w-6 h-6 text-white" />
+                        <div className="relative w-[calc(100%-4px)] h-[calc(100%-4px)] rounded-full overflow-hidden">
+                            <Image src="/ai_avatar.png" alt="AI Assistant" fill className="object-cover" />
+                        </div>
 
                         {hasNotification && (
                             <motion.div
@@ -321,12 +417,10 @@ export function ChatBot() {
                         >
                             <div className="flex items-center gap-3">
                                 <motion.div
-                                    className="w-9 h-9 rounded-xl flex items-center justify-center"
-                                    style={{ backgroundColor: "rgba(255,255,255,0.15)", backdropFilter: "blur(10px)" }}
-                                    animate={{ rotate: [0, 5, -5, 0] }}
-                                    transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+                                    className="w-10 h-10 rounded-full flex items-center justify-center overflow-hidden relative shadow-lg bg-black cursor-pointer"
+                                    style={{ border: "2px solid rgba(255,255,255,0.2)" }}
                                 >
-                                    <CommandLineIcon className="w-5 h-5 text-white" />
+                                    <Image src="/ai_avatar.png" alt="ARIA" fill className="object-cover" />
                                 </motion.div>
                                 <div>
                                     <h3 className="text-white font-bold text-sm tracking-wide">ARIA</h3>
@@ -468,15 +562,53 @@ export function ChatBot() {
                         </div>
 
                         {/* ── Footer ── */}
-                        <div
-                            className="px-4 py-3 flex items-center justify-center gap-2 shrink-0"
-                            style={{ borderTop: "1px solid var(--theme-panel-border)" }}
-                        >
-                            <CommandLineIcon className="w-3.5 h-3.5" style={{ color: "var(--theme-muted)" }} />
-                            <p className="text-xs" style={{ color: "var(--theme-muted)" }}>
-                                ARIA — Aryan's Responsive Intelligent Assistant
-                            </p>
-                        </div>
+                        {contactState === "idle" ? (
+                            <div
+                                className="px-4 py-3 flex items-center justify-center gap-2 shrink-0"
+                                style={{ borderTop: "1px solid var(--theme-panel-border)" }}
+                            >
+                                <CommandLineIcon className="w-3.5 h-3.5" style={{ color: "var(--theme-muted)" }} />
+                                <p className="text-xs" style={{ color: "var(--theme-muted)" }}>
+                                    ARIA — Aryan's Responsive Intelligent Assistant
+                                </p>
+                            </div>
+                        ) : (
+                            <form
+                                onSubmit={handleSendText}
+                                className="px-3 py-3 flex items-center gap-2 shrink-0 transition-all"
+                                style={{ borderTop: "1px solid var(--theme-panel-border)", backgroundColor: "color-mix(in srgb, var(--theme-panel) 50%, transparent)" }}
+                            >
+                                <input
+                                    type={contactState === "awaiting_email" ? "email" : "text"}
+                                    value={inputText}
+                                    onChange={(e) => setInputText(e.target.value)}
+                                    placeholder={
+                                        contactState === "awaiting_name" ? "Type your full name..." :
+                                            contactState === "awaiting_email" ? "Type your email address..." :
+                                                contactState === "awaiting_message" ? "Type your message..." : "Sending..."
+                                    }
+                                    disabled={contactState === "sending" || isTyping}
+                                    className="flex-1 px-3 py-2 rounded-lg text-sm bg-transparent border focus:outline-none focus:ring-1 transition-colors w-full"
+                                    style={{
+                                        borderColor: "var(--theme-panel-border)",
+                                        color: "var(--theme-foreground)",
+                                    }}
+                                    autoFocus
+                                />
+                                <button
+                                    type="submit"
+                                    disabled={!inputText.trim() || contactState === "sending" || isTyping}
+                                    className="p-2 rounded-lg text-white disabled:opacity-50 transition-opacity flex items-center justify-center h-full aspect-square cursor-pointer"
+                                    style={{ backgroundColor: "var(--theme-accent)" }}
+                                >
+                                    {contactState === "sending" ? (
+                                        <ArrowPathIcon className="w-4 h-4 animate-spin" />
+                                    ) : (
+                                        <PaperAirplaneIcon className="w-4 h-4" />
+                                    )}
+                                </button>
+                            </form>
+                        )}
                     </motion.div>
                 )}
             </AnimatePresence>
