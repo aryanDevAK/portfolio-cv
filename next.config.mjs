@@ -11,4 +11,5 @@ const nextConfig = {
   },
 }
 
+// Force restart comment
 export default nextConfig
