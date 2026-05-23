@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react"
 import { useIsMobile } from "@/hooks/use-mobile"
 import { GlassPanel } from "../glass-panel"
+import { ThreeBackground } from "../three-background"
 import {
   EnvelopeIcon,
   MapPinIcon,
@@ -81,51 +82,6 @@ function Typewriter({ words, className, style }: { words: string[]; className?: 
         |
       </motion.span>
     </span>
-  )
-}
-
-/* ───────────────── Floating Particles ───────────────── */
-function FloatingParticles() {
-  const isMobile = useIsMobile()
-  const count = isMobile ? 6 : 20
-  const particles = Array.from({ length: count }, (_, i) => ({
-    id: i,
-    x: `${Math.random() * 100}%`,
-    y: `${Math.random() * 100}%`,
-    size: 2 + Math.random() * 4,
-    delay: Math.random() * 5,
-    dur: 8 + Math.random() * 12,
-  }))
-
-  return (
-    <div className="absolute inset-0 overflow-hidden pointer-events-none">
-      {particles.map((p) => (
-        <motion.div
-          key={p.id}
-          className="absolute rounded-full"
-          style={{
-            left: p.x,
-            top: p.y,
-            width: p.size,
-            height: p.size,
-            backgroundColor: "var(--theme-accent)",
-            opacity: 0.2,
-          }}
-          animate={{
-            y: [0, -30, 10, -15, 0],
-            x: [0, 15, -10, 5, 0],
-            opacity: [0.15, 0.35, 0.1, 0.3, 0.15],
-            scale: [1, 1.5, 0.8, 1.2, 1],
-          }}
-          transition={{
-            duration: p.dur,
-            repeat: Infinity,
-            delay: p.delay,
-            ease: "easeInOut",
-          }}
-        />
-      ))}
-    </div>
   )
 }
 
@@ -366,7 +322,7 @@ const skills = {
 export function HomeSection() {
   return (
     <section className="min-h-screen flex items-center justify-center p-4 md:p-6 my-10 md:my-20 relative">
-      <FloatingParticles />
+      <ThreeBackground />
 
       <div className="max-w-6xl w-full relative z-10">
         {/* ── Hero Section ── */}
