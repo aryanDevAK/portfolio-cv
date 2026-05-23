@@ -16,16 +16,23 @@ import {
 const experienceData = [
   {
     id: 4,
-    company: "Arth",
+    company: "Arthimpact Digital Loans",
     role: "Software Engineer",
     startDate: "June 2025",
     endDate: "Present",
     description:
-      "Working as a Software Engineer at Arth, focusing on Full Stack Development and AI in Fintech.",
+      "Working as a Software Engineer at Arthimpact, focusing on Full Stack Development and AI in Fintech.",
     bullets: [
-      "Engineered and deployed the India’s first 100% Digital Lending Channel for LAP and HL, enhancing user onboarding efficiency by 80% and loan processing speed by 70%, impacting more than 60% of leads processing through digital channel for Secured Loan.",
-      "Automated the Customer Support Team upto 80% by engineering custom support agent, resulting increase in customer satisfaction rate upto 150%.",
-      "Architected the FinPro stack of Lending lifecycle such as LOS, LMS, Credit Engine and CRM for commercializing them as SAAS for other NBFC’s."
+      <>Engineered and deployed a <strong>Digital Leads Generation</strong> platform that improved user onboarding efficiency by <strong>80%</strong> and accelerated loan processing speed by <strong>70%</strong>, contributing to more than <strong>50%</strong> of lead processing through digital channels.</>,
+      <>Engineered AI-assisted <strong>risk and credit assessment workflows</strong> integrated into the company’s lending and underwriting systems for borrower categories including <em>Agri, Small Traders, Homepreneurs, Gig Workers, Nano-scale Manufacturing, and Salaried customers</em>.</>,
+      <>Designed a <strong>multi-agent credit intelligence system</strong> with category-specific feature engineering and decisioning workflows, improving customer approval rates by <strong>60%</strong>, portfolio quality by <strong>25%</strong>, and overall LOS customer quality by <strong>75%</strong>.</>,
+      <>Planned, developed, and deployed <strong>KITE (KYC & Identity Trust Engine)</strong>, an AI-assisted <em>Virtual KYC, PD, and PV platform</em> with capabilities including <em>OCR, Digital KYC, liveliness detection, sentiment analysis, identity validation, and property verification</em> through India Stack integrations, enabling <strong>100% digital borrower verification</strong>, reducing field verification dependency by <strong>70%</strong>, and accelerating verification turnaround time by <strong>80%</strong>.</>,
+      <>Planned and engineered the <strong>FinPro SaaS platform</strong> (<em>LOS, LMS, CRM, Field Force Management</em>) architecture end-to-end for enabling the platform to be offered as a <em>Technology Service Provider (TSP)</em> solution.</>,
+      <>Designed and deployed <strong>secure banking-grade authentication and login systems</strong> with focus on <em>scalability, operational reliability, and secure access management</em>.</>,
+      <>Revived and engineered <strong>“Khushi”</strong>, a <em>RAG-based AI customer support assistant</em> designed to improve contextual customer query resolution and internal support workflows, achieving a <strong>65% positive customer approval and satisfaction rate</strong> through AI-assisted support interactions.</>,
+      <>Managed deployment infrastructure across on-premise and cloud environments using <strong>Jenkins, Docker, Portainer, AWS ECS, Amplify, EC2, CloudFormation, and AWS CodePipeline</strong>.</>,
+      <>Identified and resolved <em>critical platform bottlenecks, workflow gaps, deployment issues, and engineering shortfalls</em> through retrospective analysis, earning internal recognition as a <em>solution-oriented engineer</em>.</>,
+      <>Participated in technical hiring processes and mentored <strong>20+ interns</strong> across <em>onboarding, debugging, engineering workflows, and product development practices</em>.</>
     ],
     logoUrl: "https://arthimpact.in/wp-content/uploads/2025/06/512-x-512.png",
     certificate: false,

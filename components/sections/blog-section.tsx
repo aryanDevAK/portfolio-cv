@@ -48,6 +48,9 @@ export function BlogSection() {
       ? blogs
       : blogs.filter((blog) => blog.category === selectedCategory)
   const featuredBlogs = blogs.filter((blog) => blog.featured)
+  const latestBlogs = [...blogs]
+    .sort((a, b) => new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime())
+    .slice(0, 3)
 
   return (
     <section className="min-h-screen p-6 lg:p-8 my-20 relative">
@@ -189,6 +192,83 @@ export function BlogSection() {
                           >
                             Read Article
                             <ArrowLongRightIcon className="w-4 h-4" />
+                          </motion.div>
+                        </div>
+                      </GlassPanel>
+                    </motion.div>
+                  </motion.div>
+                ))}
+              </div>
+            </div>
+          </FadeIn>
+        )}
+
+        {/* ── Latest Updates ── */}
+        {latestBlogs.length > 0 && (
+          <FadeIn delay={0.15}>
+            <div className="mb-20">
+              <div className="flex items-center gap-2 mb-6">
+                <motion.div
+                  animate={{ y: [0, -4, 0] }}
+                  transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+                >
+                  <ClockIcon className="w-5 h-5" style={{ color: "var(--theme-accent)" }} />
+                </motion.div>
+                <h3
+                  className="text-xl font-bold"
+                  style={{ color: "var(--theme-foreground)" }}
+                >
+                  Latest Updates
+                </h3>
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                {latestBlogs.map((blog, i) => (
+                  <motion.div
+                    key={`latest-${blog.id}`}
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.4, delay: i * 0.1 }}
+                    className="cursor-pointer group"
+                    onClick={() => setSelectedBlog(blog)}
+                  >
+                    <motion.div
+                      whileHover={{ y: -6 }}
+                      transition={{ duration: 0.2 }}
+                    >
+                      <GlassPanel className="h-full overflow-hidden flex flex-col p-5" hover>
+                        <div className="flex items-center gap-2 text-xs font-semibold mb-2.5" style={{ color: "var(--theme-accent)" }}>
+                          <span className="px-2.5 py-0.5 rounded-full" style={{ backgroundColor: "var(--theme-glass)", border: "1px solid var(--theme-panel-border)" }}>
+                            {blog.category}
+                          </span>
+                          <span className="text-[10px] uppercase font-bold px-1.5 py-0.5 rounded" style={{ backgroundColor: "color-mix(in srgb, var(--theme-accent) 15%, transparent)", color: "var(--theme-accent)" }}>
+                            New
+                          </span>
+                        </div>
+                        <h4 className="font-bold text-base mb-2 line-clamp-2 transition-colors duration-200 group-hover:text-[color-mix(in srgb, var(--theme-accent) 90%, white)]" style={{ color: "var(--theme-foreground)" }}>
+                          {blog.title}
+                        </h4>
+                        <p className="text-xs mb-4 line-clamp-2" style={{ color: "var(--theme-muted)" }}>
+                          {blog.excerpt}
+                        </p>
+                        <div className="flex items-center justify-between text-[11px] mt-auto pt-3 border-t" style={{ borderColor: "var(--theme-panel-border)", color: "var(--theme-muted)" }}>
+                          <div className="flex items-center gap-3">
+                            <span className="flex items-center gap-1">
+                              <CalendarIcon className="w-3.5 h-3.5" />
+                              {new Date(blog.publishedAt).toLocaleDateString()}
+                            </span>
+                            <span className="flex items-center gap-1">
+                              <ClockIcon className="w-3.5 h-3.5" />
+                              {blog.readTime}
+                            </span>
+                          </div>
+                          <motion.div
+                            className="flex items-center gap-0.5 font-semibold text-xs"
+                            style={{ color: "var(--theme-accent)" }}
+                            whileHover={{ x: 2 }}
+                          >
+                            Read
+                            <ArrowLongRightIcon className="w-3.5 h-3.5" />
                           </motion.div>
                         </div>
                       </GlassPanel>

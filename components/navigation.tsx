@@ -122,7 +122,7 @@ export function Navigation({ activeSection, onSectionChange }: NavigationProps) 
                   Aryan Khatri
                 </h1>
                 <p className="text-xs" style={{ color: "var(--theme-muted)" }}>
-                  Software Engineer
+                  AI & Software Engineer
                 </p>
               </div>
             </div>

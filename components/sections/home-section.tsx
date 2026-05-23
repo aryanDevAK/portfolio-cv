@@ -29,6 +29,14 @@ import {
   SiHtml5,
   SiCss3,
   SiNodedotjs,
+  SiRedux,
+  SiExpress,
+  SiRubyonrails,
+  SiOllama,
+  SiOpenai,
+  SiLangchain,
+  SiPortainer,
+  SiJenkins,
 } from "react-icons/si"
 import { FaPython, FaDatabase } from "react-icons/fa6"
 import { RiNextjsFill } from "react-icons/ri"
@@ -335,30 +343,46 @@ const skills = {
     { name: "Next.js", icon: RiNextjsFill },
     { name: "React.js", icon: SiReact },
     { name: "React Native", icon: SiReact },
+    { name: "Redux", icon: SiRedux },
     { name: "Streamlit", icon: SiStreamlit },
     { name: "HTML", icon: SiHtml5 },
     { name: "CSS", icon: SiCss3 },
     { name: "Tailwind CSS", icon: SiTailwindcss },
   ],
   backend: [
+    { name: "FastAPI", icon: SiFastapi },
     { name: "Django", icon: SiDjango },
     { name: "Flask", icon: SiFlask },
-    { name: "FastAPI", icon: SiFastapi },
     { name: "Node.js", icon: SiNodedotjs },
+    { name: "Express.js", icon: SiExpress },
+    { name: "Ruby on Rails", icon: SiRubyonrails },
     { name: "PostgreSQL", icon: SiPostgresql },
     { name: "MongoDB", icon: SiMongodb },
     { name: "MySQL", icon: SiMysql },
   ],
+  ai: [
+    { name: "AI Agents", icon: SiOpenai },
+    { name: "LangChain", icon: SiLangchain },
+    { name: "Llama Models", icon: SiOllama },
+    { name: "RAG", icon: null },
+    { name: "NLP", icon: null },
+    { name: "OCR", icon: null },
+  ],
   tools: [
     { name: "Docker", icon: SiDocker },
-    { name: "Containers", icon: null },
+    { name: "AWS ECS/EC2", icon: SiAmazon },
+    { name: "AWS Amplify", icon: SiAmazon },
+    { name: "CloudFormation", icon: SiAmazon },
+    { name: "CodePipeline", icon: SiAmazon },
+    { name: "Jenkins", icon: SiJenkins },
+    { name: "Portainer", icon: SiPortainer },
     { name: "Linux", icon: SiLinux },
-    { name: "AWS", icon: SiAmazon },
-    { name: "CI/CD", icon: null },
-    { name: "Agile", icon: null },
-    { name: "OLama", icon: null },
-    { name: "Langchain", icon: null },
     { name: "Git/Github", icon: FaGithub },
+    { name: "CI/CD", icon: null },
+    { name: "REST APIs", icon: null },
+    { name: "Auth Systems", icon: null },
+    { name: "SaaS Architecture", icon: null },
+    { name: "Agile/Scrum", icon: null },
   ],
 }
 
@@ -574,16 +598,17 @@ export function HomeSection() {
             <h3 className="text-2xl font-bold mb-6 text-center" style={{ color: "var(--theme-foreground)" }}>
               Technical Skills
             </h3>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               {(
                 [
-                  { title: "Programming Languages", items: skills.languages },
-                  { title: "Frontend", items: skills.frontend },
-                  { title: "Backend & Database", items: skills.backend },
-                  { title: "Tools & Platforms", items: skills.tools },
+                  { title: "Programming Languages", items: skills.languages, className: "" },
+                  { title: "Frontend", items: skills.frontend, className: "" },
+                  { title: "Backend & Database", items: skills.backend, className: "" },
+                  { title: "AI & Automation", items: skills.ai, className: "" },
+                  { title: "Tools, Platforms & Concepts", items: skills.tools, className: "md:col-span-2" },
                 ] as const
               ).map((group, groupIdx) => (
-                <div key={group.title}>
+                <div key={group.title} className={group.className}>
                   <h4 className="font-semibold mb-3" style={{ color: "var(--theme-accent)" }}>
                     {group.title}
                   </h4>

@@ -219,7 +219,7 @@ export const blogs: Blog[] = [
     readTime: "6 min read",
     tags: ["AI", "Agents", "Software Development", "LLMs", "Automation"],
     category: "AI/ML",
-    featured: true,
+    featured: false,
     image: "https://images.unsplash.com/photo-1677442136019-21780ecad995?w=800&h=400&fit=crop",
     slug: "ai-agents-2026-reshaping-software-development",
   },
@@ -658,8 +658,480 @@ export const blogs: Blog[] = [
     readTime: "10 min read",
     tags: ["Database", "Scaling", "Backend", "System Design", "Performance"],
     category: "Full Stack",
-    featured: true,
+    featured: false,
     image: "https://images.unsplash.com/photo-1544383835-bda2bc66a55d?w=800&h=400&fit=crop",
     slug: "databases-dont-fail-at-scale-designs-do",
+  },
+  {
+    id: 6,
+    title: "How to Deploy AI Agents Company-Wide and Upskill Your Employees",
+    excerpt:
+      "Deploying AI agents across your organization isn't a tech upgrade — it's a cultural shift. Here's a practical, battle-tested guide on rolling out AI agents at scale while bringing every employee along for the ride.",
+    content: (
+      <>
+        <p>
+          Let me be direct: <strong>most companies fail at AI adoption</strong>{" "}
+          not because the technology isn't ready, but because they treat it like a
+          software installation. Buy a license, send a Slack message, and expect
+          everyone to become 10x productive by Monday.
+        </p>
+
+        <p>
+          That's not how it works. I've seen this firsthand while building
+          AI-assisted platforms at Arthimpact Digital Loans — deploying AI agents
+          that actually <em>stick</em> requires equal parts{" "}
+          <strong>engineering, strategy, and empathy</strong>.
+        </p>
+
+        <p>
+          This guide covers everything: from choosing where to start, to building
+          the right infrastructure, to creating a culture where employees don't
+          fear AI — they <em>demand</em> more of it.
+        </p>
+
+        {/* Hero: Corporate AI Strategy */}
+        <img
+          src="https://images.unsplash.com/photo-1552664730-d307ca884978?w=1200&h=600&fit=crop"
+          alt="Corporate strategy meeting with team collaboration"
+          style={{ width: "100%", borderRadius: "8px", margin: "20px 0" }}
+        />
+
+        <h2 style={{ marginTop: "32px", marginBottom: "16px" }}>
+          1. Start with the Problem, Not the Technology
+        </h2>
+        <p>
+          The biggest mistake companies make is deploying AI agents because
+          "everyone else is doing it." That's how you end up with expensive
+          chatbots nobody uses and dashboards nobody checks.
+        </p>
+        <p>
+          <strong>Instead, ask three questions:</strong>
+        </p>
+        <ul>
+          <li>
+            <strong>Where are employees spending the most time on repetitive work?</strong>{" "}
+            — Data entry, report generation, email triage, customer query
+            classification, document review. These are your low-hanging fruit.
+          </li>
+          <li>
+            <strong>Where do errors cost the most?</strong> — Compliance checks,
+            KYC verification, credit risk assessment, invoice processing. AI
+            agents can reduce human error rates by 40–70% in these areas.
+          </li>
+          <li>
+            <strong>Where is institutional knowledge trapped in people's heads?</strong>{" "}
+            — Onboarding processes, troubleshooting guides, customer support
+            playbooks. RAG-based AI agents can make this knowledge accessible
+            24/7.
+          </li>
+        </ul>
+        <p>
+          At Arthimpact, we didn't start with "let's build an AI agent." We
+          started with "our field verification process takes 3 days and involves
+          4 people." That problem led us to build{" "}
+          <strong>KITE (KYC & Identity Trust Engine)</strong>, which reduced
+          verification turnaround by 80%.
+        </p>
+
+        <h2 style={{ marginTop: "32px", marginBottom: "16px" }}>
+          2. Map Your Organization's AI Readiness
+        </h2>
+        <p>
+          Before deploying anything, you need an honest assessment of where your
+          organization stands. Not every team, department, or process is ready for
+          AI agents on day one.
+        </p>
+
+        <img
+          src="https://images.unsplash.com/photo-1542744173-8e7e53415bb0?w=1200&h=600&fit=crop"
+          alt="Team analyzing data on a whiteboard during strategy session"
+          style={{ width: "100%", borderRadius: "8px", margin: "20px 0" }}
+        />
+
+        <p>
+          <strong>Assess readiness across four dimensions:</strong>
+        </p>
+        <ul>
+          <li>
+            <strong>Data maturity</strong> — Do you have clean, structured,
+            accessible data? AI agents are only as good as the data they can
+            access. If your knowledge base is scattered across 15 Google Drives
+            and 3 legacy systems, fix that first.
+          </li>
+          <li>
+            <strong>Process documentation</strong> — Are your workflows
+            documented? AI agents need clear rules to follow. If your team's
+            process lives entirely in "ask Rajesh, he knows how it works," you
+            have a documentation problem before you have an AI problem.
+          </li>
+          <li>
+            <strong>Technical infrastructure</strong> — Do you have APIs, cloud
+            access, CI/CD pipelines? Deploying AI agents requires an engineering
+            foundation. You can't bolt intelligence onto broken infrastructure.
+          </li>
+          <li>
+            <strong>Cultural openness</strong> — How does your team feel about
+            automation? Fear, curiosity, excitement? This is the most
+            underestimated dimension and the one that determines long-term success.
+          </li>
+        </ul>
+
+        <h2 style={{ marginTop: "32px", marginBottom: "16px" }}>
+          3. Choose the Right Type of AI Agent for Each Use Case
+        </h2>
+        <p>
+          "AI agent" is a broad term. The agent you deploy for customer support is
+          architecturally different from one that handles credit risk assessment.
+          Understanding the spectrum is critical.
+        </p>
+
+        <p>
+          <strong>Types of AI agents by complexity:</strong>
+        </p>
+        <ul>
+          <li>
+            <strong>Rule-Based Assistants</strong> — Simple decision trees
+            enhanced with NLP. Great for FAQ bots, ticket routing, and form
+            pre-filling. Low risk, fast deployment.
+          </li>
+          <li>
+            <strong>RAG-Powered Knowledge Agents</strong> — Connect an LLM to
+            your company's documents, SOPs, and databases. The agent retrieves
+            context before generating answers. This is what we built with{" "}
+            <strong>"Khushi"</strong> at Arthimpact — a customer support agent
+            that achieved a 65% satisfaction rate by pulling answers from actual
+            company policies.
+          </li>
+          <li>
+            <strong>Multi-Step Workflow Agents</strong> — These agents can plan
+            and execute sequences of actions: pull data from a CRM, run a credit
+            check, generate a report, and email it to the underwriter. This is
+            where LangChain, function calling, and tool-use architectures shine.
+          </li>
+          <li>
+            <strong>Autonomous Decision Agents</strong> — The most advanced tier.
+            These agents make decisions within defined guardrails — approving
+            low-risk loans, flagging compliance violations, or auto-classifying
+            support tickets with human-in-the-loop escalation.
+          </li>
+        </ul>
+
+        <img
+          src="https://images.unsplash.com/photo-1531482615713-2afd69097998?w=1200&h=600&fit=crop"
+          alt="Team collaborating on technology solutions around laptops"
+          style={{ width: "100%", borderRadius: "8px", margin: "20px 0" }}
+        />
+
+        <p>
+          <strong>My recommendation:</strong> Start with RAG-powered knowledge
+          agents. They're the highest-impact, lowest-risk entry point. Employees
+          get an always-available expert assistant, and leadership gets measurable
+          productivity gains within weeks.
+        </p>
+
+        <h2 style={{ marginTop: "32px", marginBottom: "16px" }}>
+          4. Build the Infrastructure Layer
+        </h2>
+        <p>
+          You can't deploy AI agents on top of spaghetti infrastructure. Before
+          writing a single prompt, make sure you have these foundations in place:
+        </p>
+        <ul>
+          <li>
+            <strong>Centralized Knowledge Base</strong> — Consolidate company
+            SOPs, policies, product docs, and FAQs into a vector database
+            (Pinecone, Weaviate, or even PostgreSQL with pgvector). This becomes
+            the brain your agents query.
+          </li>
+          <li>
+            <strong>API Gateway</strong> — Your AI agents will need to talk to
+            your CRM, HRMS, LOS, ERP, and communication tools. A well-designed
+            API layer is non-negotiable. Secure it. Rate-limit it. Log everything.
+          </li>
+          <li>
+            <strong>Guardrails & Safety Layer</strong> — Every agent must have
+            boundaries. Define what it can and cannot do. Implement output
+            filtering, PII detection, and fallback-to-human mechanisms. This is
+            especially critical in fintech, healthcare, and legal domains.
+          </li>
+          <li>
+            <strong>Observability & Monitoring</strong> — Track agent performance:
+            response accuracy, latency, user satisfaction, escalation rates,
+            hallucination frequency. What you don't measure, you can't improve.
+          </li>
+          <li>
+            <strong>Deployment Pipeline</strong> — Treat AI agents like
+            software. Version control your prompts, test with evaluation
+            datasets, deploy through CI/CD, and roll back when things break. At
+            Arthimpact, we use Docker, Jenkins, and AWS ECS for this.
+          </li>
+        </ul>
+
+        <h2 style={{ marginTop: "32px", marginBottom: "16px" }}>
+          5. The Rollout: Think in Waves, Not Big Bangs
+        </h2>
+        <p>
+          Do <strong>not</strong> deploy AI agents to the entire company at once.
+          I've seen this go wrong more times than I care to count. The right
+          approach is a phased rollout.
+        </p>
+
+        <img
+          src="https://images.unsplash.com/photo-1600880292203-757bb62b4baf?w=1200&h=600&fit=crop"
+          alt="Employees collaborating in a modern open office"
+          style={{ width: "100%", borderRadius: "8px", margin: "20px 0" }}
+        />
+
+        <p>
+          <strong>Phase 1: Pilot (Weeks 1–4)</strong>
+        </p>
+        <ul>
+          <li>Select one team or department as your pilot group (ideally 10–25 people)</li>
+          <li>Choose a single, well-defined use case (e.g., internal knowledge Q&A)</li>
+          <li>Deploy the agent with a clear feedback mechanism — thumbs up/down on every response</li>
+          <li>Assign an "AI Champion" within the team who drives adoption and collects feedback</li>
+        </ul>
+
+        <p>
+          <strong>Phase 2: Iterate & Expand (Weeks 5–12)</strong>
+        </p>
+        <ul>
+          <li>Analyze pilot data: What questions does the agent handle well? Where does it fail?</li>
+          <li>Retrain, update the knowledge base, and refine prompts based on real usage</li>
+          <li>Expand to 2–3 more departments, each with their own customized agent context</li>
+          <li>Begin documenting ROI metrics: time saved, tickets deflected, error reduction</li>
+        </ul>
+
+        <p>
+          <strong>Phase 3: Company-Wide Deployment (Months 3–6)</strong>
+        </p>
+        <ul>
+          <li>Roll out across all departments with department-specific agent configurations</li>
+          <li>Integrate into daily tools: Slack, Teams, email, CRM dashboards</li>
+          <li>Establish an AI governance committee to oversee usage, ethics, and compliance</li>
+          <li>Publish internal "AI usage guidelines" covering dos, don'ts, and escalation protocols</li>
+        </ul>
+
+        <h2 style={{ marginTop: "32px", marginBottom: "16px" }}>
+          6. Upskilling: The Part Everyone Skips (and Pays For Later)
+        </h2>
+        <p>
+          Here's the uncomfortable truth:{" "}
+          <strong>
+            deploying AI agents without upskilling your employees is like giving
+            a Formula 1 car to someone who's never driven.
+          </strong>{" "}
+          The tool is incredible, but the human needs to know how to use it.
+        </p>
+
+        <img
+          src="https://images.unsplash.com/photo-1524178232363-1fb2b075b655?w=1200&h=600&fit=crop"
+          alt="Professional training session in a modern classroom"
+          style={{ width: "100%", borderRadius: "8px", margin: "20px 0" }}
+        />
+
+        <p>
+          <strong>A practical upskilling framework:</strong>
+        </p>
+
+        <p>
+          <strong>Level 1: AI Literacy (Everyone)</strong>
+        </p>
+        <ul>
+          <li>What AI agents are and what they're not (manage expectations early)</li>
+          <li>How to write effective prompts — clear instructions, context, and constraints</li>
+          <li>Understanding AI limitations: hallucinations, bias, and when to verify outputs</li>
+          <li>Data privacy and security awareness — what to share with AI and what not to</li>
+        </ul>
+
+        <p>
+          <strong>Level 2: AI Power Users (Department Leads, Managers)</strong>
+        </p>
+        <ul>
+          <li>How to identify new automation opportunities in their workflows</li>
+          <li>Creating and maintaining knowledge bases for department-specific agents</li>
+          <li>Interpreting agent performance metrics and providing structured feedback</li>
+          <li>Managing human-AI hybrid workflows — when the agent handles it vs. when a human steps in</li>
+        </ul>
+
+        <p>
+          <strong>Level 3: AI Builders (Engineering & Technical Teams)</strong>
+        </p>
+        <ul>
+          <li>Prompt engineering at scale: system prompts, few-shot examples, chain-of-thought</li>
+          <li>Building RAG pipelines: document ingestion, chunking strategies, embedding models</li>
+          <li>Agent orchestration: LangChain, function calling, multi-agent architectures</li>
+          <li>Evaluation and testing: building eval datasets, measuring accuracy, detecting drift</li>
+          <li>Production deployment: containerization, monitoring, cost optimization</li>
+        </ul>
+
+        <h2 style={{ marginTop: "32px", marginBottom: "16px" }}>
+          7. Overcoming Resistance: The Human Side of AI Deployment
+        </h2>
+        <p>
+          Let's address the elephant in the room. Many employees will be{" "}
+          <strong>afraid</strong> of AI agents. "Will this replace my job?"
+          is the unspoken question behind every polite nod in your town-hall
+          meeting.
+        </p>
+        <p>
+          <strong>How to address this honestly:</strong>
+        </p>
+        <ul>
+          <li>
+            <strong>Be transparent about intent.</strong> If you're deploying AI
+            to augment (not replace) your team, say so clearly and repeatedly.
+            Show concrete examples: "This agent handles tier-1 tickets so your
+            team can focus on complex customer issues."
+          </li>
+          <li>
+            <strong>Show, don't tell.</strong> Run live demos where employees see
+            the agent in action. Let them interact with it. The moment someone
+            realizes the agent can draft a report in 30 seconds that used to take
+            them 45 minutes, the fear turns into excitement.
+          </li>
+          <li>
+            <strong>Celebrate early wins publicly.</strong> When a team saves 10
+            hours a week using an AI agent, announce it. Name the people, share
+            the metrics. Success stories are the best adoption fuel.
+          </li>
+          <li>
+            <strong>Create internal AI champions.</strong> Identify enthusiastic
+            early adopters in every department. Give them extra training, involve
+            them in feedback loops, and let them evangelize organically. Peer
+            influence beats top-down mandates every time.
+          </li>
+        </ul>
+
+        <img
+          src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=1200&h=600&fit=crop"
+          alt="Diverse team celebrating a win together"
+          style={{ width: "100%", borderRadius: "8px", margin: "20px 0" }}
+        />
+
+        <h2 style={{ marginTop: "32px", marginBottom: "16px" }}>
+          8. Measuring Success: The Metrics That Actually Matter
+        </h2>
+        <p>
+          You need to prove that your AI deployment is delivering value. Vanity
+          metrics ("we processed 10,000 queries!") don't cut it. Focus on
+          outcomes:
+        </p>
+        <ul>
+          <li>
+            <strong>Time saved per employee per week</strong> — The single most
+            convincing metric for leadership. If your 50-person team saves 5
+            hours each per week, that's 250 hours/week or ~6 full-time
+            equivalents.
+          </li>
+          <li>
+            <strong>Error reduction rate</strong> — Compare error rates in
+            AI-assisted vs. manual processes. At Arthimpact, our credit
+            assessment workflows reduced errors by 60% with AI-assisted
+            decisioning.
+          </li>
+          <li>
+            <strong>Employee satisfaction with AI tools</strong> — Run quarterly
+            surveys. Are people using the tools willingly? Do they find them
+            helpful? High adoption ≠ high satisfaction.
+          </li>
+          <li>
+            <strong>Escalation rate</strong> — What percentage of AI-handled
+            tasks require human intervention? This number should decrease over
+            time as you refine the agent.
+          </li>
+          <li>
+            <strong>Cost per resolved query</strong> — Compare the cost of
+            AI-resolved interactions vs. human-resolved ones. This is the number
+            that gets budgets approved for expansion.
+          </li>
+        </ul>
+
+        <h2 style={{ marginTop: "32px", marginBottom: "16px" }}>
+          9. Common Mistakes to Avoid
+        </h2>
+        <p>
+          I've made some of these myself. Learn from them:
+        </p>
+        <ul>
+          <li>
+            <strong>Deploying without a feedback loop</strong> — If users can't
+            report bad outputs, you'll never know the agent is failing. Every
+            response needs a thumbs up/down button at minimum.
+          </li>
+          <li>
+            <strong>Over-promising capabilities</strong> — Don't tell the sales
+            team the AI agent "knows everything." Set realistic expectations.
+            Under-promise, over-deliver.
+          </li>
+          <li>
+            <strong>Ignoring data privacy</strong> — Especially in fintech and
+            healthcare. Know what data flows through your agents, where it's
+            stored, and who can access it. Compliance isn't optional.
+          </li>
+          <li>
+            <strong>Treating AI as "set and forget"</strong> — AI agents need
+            continuous maintenance. Your knowledge base changes, your products
+            evolve, your processes update. If the agent's context is stale, its
+            answers are wrong.
+          </li>
+          <li>
+            <strong>Skipping the upskilling investment</strong> — This is the
+            single biggest predictor of failure. Budget for training. Make it
+            mandatory. Make it ongoing.
+          </li>
+        </ul>
+
+        <h2 style={{ marginTop: "32px", marginBottom: "16px" }}>
+          10. The Endgame: Building an AI-Native Organization
+        </h2>
+
+        <img
+          src="https://images.unsplash.com/photo-1485827404703-89b55fcc595e?w=1200&h=600&fit=crop"
+          alt="Futuristic robot symbolizing AI-native organizations"
+          style={{ width: "100%", borderRadius: "8px", margin: "20px 0" }}
+        />
+
+        <p>
+          The goal isn't to "use AI." The goal is to become an organization
+          where AI is as natural as email — embedded into every workflow, every
+          decision, every interaction.
+        </p>
+        <p>
+          <strong>What an AI-native organization looks like:</strong>
+        </p>
+        <ul>
+          <li>Every department has at least one AI agent tailored to their specific workflows</li>
+          <li>New employees learn to work with AI agents during onboarding — it's day-one tooling</li>
+          <li>Knowledge bases are living documents, continuously updated by both humans and AI</li>
+          <li>Engineering teams ship AI features as naturally as they ship UI features</li>
+          <li>Leadership makes data-driven decisions informed by AI-generated insights</li>
+          <li>The company has a clear AI ethics policy and governance framework</li>
+        </ul>
+
+        <p>
+          This doesn't happen overnight. It happens through{" "}
+          <strong>consistent execution</strong> — one use case at a time, one
+          team at a time, one win at a time.
+        </p>
+
+        <p>
+          <em>
+            The companies that will dominate the next decade aren't the ones with
+            the most AI agents — they're the ones whose{" "}
+            <strong>people</strong> know how to work with them. Technology is the
+            easy part. Culture is the moat. Start building both today.
+          </em>
+        </p>
+      </>
+    ),
+    author: "Aryan Khatri",
+    publishedAt: "2026-05-23",
+    readTime: "12 min read",
+    tags: ["AI Agents", "Enterprise AI", "Upskilling", "Digital Transformation", "Leadership"],
+    category: "AI/ML",
+    featured: true,
+    image: "https://images.unsplash.com/photo-1552664730-d307ca884978?w=800&h=400&fit=crop",
+    slug: "deploy-ai-agents-company-wide-upskill-employees",
   },
 ]
